@@ -1,16 +1,12 @@
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Future;
 import io.vertx.core.Vertx;
-import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
-import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
+import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
-
-import java.util.Map;
 
 public class verticleController extends AbstractVerticle {
 
@@ -18,6 +14,7 @@ public class verticleController extends AbstractVerticle {
     public void start() throws Exception {
         Router router = Router.router(vertx);
 
+        router.route("/static/*").handler(StaticHandler.create());
         router.get("/").handler(this::getHomePage);
 
         HttpServer httpServer = vertx.createHttpServer();

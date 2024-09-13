@@ -3,10 +3,11 @@
 <head>
     <title>Home Page</title>
     <script src="https://unpkg.com/htmx.org@2.0.2/dist/htmx.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="/static/css/style.css">
 </head>
 <body>
 
-<p class="text-sky-600 underline">
+<p class="test">
     Hello world!
 </p>
 
@@ -19,7 +20,7 @@
     </thead>
     <tbody>
         <tr th:each="task : ${tasks}">
-            <td th:text="${task.key}"></td>
+            <td th:text="${task.key}+1"></td>
             <td th:text="${task.value}"></td>
         </tr>
     </tbody>
