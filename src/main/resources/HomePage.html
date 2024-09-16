@@ -34,7 +34,7 @@
         </div>
     </nav>
 
-    <div class="p-8 w-auto mt-10">
+    <div class="p-8 w-auto mt-10" id="all_task">
         <table class="table-auto border-solid border-2 border-black size-full">
             <thead>
                 <tr>
@@ -58,11 +58,25 @@
                     <h4 class="modal-title">Create New Task</h4>
                 </div>
                 <div class="modal-body">
-                    <label>New Task : <input class="rounded-md p-3 m-3 bg-gray-100 w-96" type="text" id="new_task"/></label>
+                    <label>New Task : <input class="rounded-md p-3 m-3 bg-gray-100 w-96" type="text" id="new_task" name="new_task"/></label>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="inline-flex w-full justify-center rounded-md bg-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-100 hover:text-gray-500 sm:ml-3 sm:w-auto" data-dismiss="modal">Submit</button>
-                    <button type="button" class="inline-flex w-full justify-center rounded-md bg-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-100 hover:text-gray-500 sm:ml-3 sm:w-auto" data-dismiss="modal">Close</button>
+                    <button
+                        type="submit"
+                        class="inline-flex w-full justify-center rounded-md bg-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-100 hover:text-gray-500 sm:ml-3 sm:w-auto"
+                        data-dismiss="modal"
+                        hx-post="/create_new_task"
+                        hx-include="input[type='text']"
+                    >
+                        Submit
+                    </button>
+                    <button
+                        type="button"
+                        class="inline-flex w-full justify-center rounded-md bg-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-100 hover:text-gray-500 sm:ml-3 sm:w-auto"
+                        data-dismiss="modal"
+                    >
+                        Close
+                    </button>
                 </div>
             </div>
         </div>

@@ -5,10 +5,12 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
+import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 
 public class verticleController extends AbstractVerticle {
+    TaskList taskList = new TaskList();
 
     @Override
     public void start() throws Exception {
@@ -16,6 +18,8 @@ public class verticleController extends AbstractVerticle {
 
         router.route("/static/*").handler(StaticHandler.create());
         router.get("/").handler(this::getHomePage);
+
+        router.post("/create_new_task").handler(BodyHandler.create()).handler(this::createNewTask);
 
         HttpServer httpServer = vertx.createHttpServer();
         httpServer.requestHandler(router).listen(8080, "localhost", res->{
@@ -28,17 +32,13 @@ public class verticleController extends AbstractVerticle {
     }
 
     public void getHomePage(RoutingContext routingContext) {
+        System.out.println("getHomePage");
         final ThymeleafTemplateEngine engine = ThymeleafTemplateEngine.create(vertx);
-
-        Task doingHomeWorkTask = new Task("doing HomeWork");
-
-        TaskList taskList = new TaskList();
-        taskList.addTask(doingHomeWorkTask);
 
         HttpServerResponse response = routingContext.response();
         response.putHeader("content-type", "text/html");
 
-        JsonObject jsonObject = new JsonObject().put("tasks", taskList.getAllTasks());
+        JsonObject jsonObject = new JsonObject().put("tasks", this.taskList.getAllTasks());
 
         engine.render(jsonObject, "src/main/resources/HomePage.html").onComplete(res -> {
             if (res.succeeded()) {
@@ -49,6 +49,27 @@ public class verticleController extends AbstractVerticle {
                 res.cause().printStackTrace();
             }
         });
+    }
+
+    public void createNewTask(RoutingContext routingContext) {
+        System.out.println("creating new task");
+
+        String string = routingContext.getBody().toString();
+
+        String[] requestParams = string.split("=");
+
+        String taskName = requestParams[1];
+
+        System.out.println("-------task name : "+taskName);
+
+        Task requestNewTask = new Task(taskName);
+        this.taskList.addTask(requestNewTask);
+
+        System.out.println("task added");
+
+        System.out.println("----task list : "+this.taskList.getAllTasks());
+
+        routingContext.response().end();
     }
 
     public static void main(String[] args) {
