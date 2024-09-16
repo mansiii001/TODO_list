@@ -2,29 +2,41 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Home Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/htmx.org@2.0.2/dist/htmx.min.js"></script>
-    <link rel="stylesheet" type="text/css" media="all" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/output.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 
-<p class="test">
-    Hello world!
-</p>
+    <nav class="bg-gray-500">
+        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div class="relative flex h-16 items-center justify-between">
+                <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                    <div class="flex-1 w-64 text-center text-white place-items-stretch text-3xl">My TODOs</div>
+                    <button class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">Create New Task</button>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-<table class="border border-collapse">
-    <thead>
-        <tr>
-            <th class="test">No.</th>
-            <th>Task to be Perform</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="task : ${tasks}">
-            <td th:text="${task.key}+1"></td>
-            <td th:text="${task.value}"></td>
-        </tr>
-    </tbody>
-</table>
+    <div class="p-8 w-auto mt-10">
+        <table class="table-auto border-solid border-2 border-black size-full">
+            <thead>
+                <tr>
+                    <th class="border border-black text-center bg-gray-100">No.</th>
+                    <th class="border border-black text-center bg-gray-100 flex justify-stretch">Task to be Perform</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="task : ${tasks}">
+                    <td class="border border-black text-center" th:text="${task.key}+1"></td>
+                    <td class="border border-black text-justify" th:text="${task.value}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 </body>
 </html>
