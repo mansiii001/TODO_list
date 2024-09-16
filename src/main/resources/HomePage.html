@@ -7,15 +7,28 @@
     <script src="https://unpkg.com/htmx.org@2.0.2/dist/htmx.min.js"></script>
     <link rel="stylesheet" href="/static/css/output.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
     <nav class="bg-gray-500">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
                 <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="flex-1 w-64 text-center text-white place-items-stretch text-3xl">My TODOs</div>
-                    <button class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">Create New Task</button>
+                    <button
+                        class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                        data-target="#create_new_task"
+                        data-toggle="modal"
+                    >
+                        Create New Task
+                    </button>
                 </div>
             </div>
         </div>
@@ -36,6 +49,23 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+
+    <div id="create_new_task" class="modal fade relative z-10" role="dialog" aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Create New Task</h4>
+                </div>
+                <div class="modal-body">
+                    <label>New Task : <input class="rounded-md p-3 m-3 bg-gray-100 w-96" type="text" id="new_task"/></label>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="inline-flex w-full justify-center rounded-md bg-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-100 hover:text-gray-500 sm:ml-3 sm:w-auto" data-dismiss="modal">Submit</button>
+                    <button type="button" class="inline-flex w-full justify-center rounded-md bg-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-100 hover:text-gray-500 sm:ml-3 sm:w-auto" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
