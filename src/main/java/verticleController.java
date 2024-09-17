@@ -67,9 +67,9 @@ public class verticleController extends AbstractVerticle {
 
         System.out.println("task added");
 
-        System.out.println("----task list : "+this.taskList.getAllTasks());
-
-        routingContext.response().end();
+        HttpServerResponse response = routingContext.response();
+        response.putHeader("HX-Redirect","/");
+        response.end();
     }
 
     public static void main(String[] args) {
