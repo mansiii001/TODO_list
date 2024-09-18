@@ -27,19 +27,23 @@
         </div>
     </nav>
 
-    <div class="p-8 w-auto mt-10" id="all_task">
-        <table class="table-auto border-solid border-2 border-black size-full">
-            <thead>
-                <tr>
-                    <th class="border border-black text-center bg-gray-100">No.</th>
-                    <th class="border border-black text-center bg-gray-100 flex justify-stretch">Task to be Perform</th>
-                </tr>
+     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-10" id="all_task">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    No.
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Task to be Perform
+                </th>
+            </tr>
             </thead>
             <tbody>
-                <tr th:each="task : ${tasks}">
-                    <td class="border border-black text-center" th:text="${task.key}+1"></td>
-                    <td class="border border-black text-justify" th:text="${task.value}"></td>
-                </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" th:each="task : ${tasks}">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" th:text="${task.key}+1"></th>
+                <td class="px-6 py-4" th:text="${task.value}"></td>
+            </tr>
             </tbody>
         </table>
     </div>
