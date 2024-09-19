@@ -17,8 +17,8 @@ public class verticleController extends AbstractVerticle {
         Router router = Router.router(vertx);
 
         router.route("/static/*").handler(StaticHandler.create());
-        router.get("/").handler(this::getHomePage);
 
+        router.get("/").handler(this::getHomePage);
         router.post("/create_new_task").handler(BodyHandler.create()).handler(this::createNewTask);
 
         HttpServer httpServer = vertx.createHttpServer();
@@ -32,7 +32,6 @@ public class verticleController extends AbstractVerticle {
     }
 
     public void getHomePage(RoutingContext routingContext) {
-        System.out.println("getHomePage");
         final ThymeleafTemplateEngine engine = ThymeleafTemplateEngine.create(vertx);
 
         HttpServerResponse response = routingContext.response();
@@ -52,20 +51,10 @@ public class verticleController extends AbstractVerticle {
     }
 
     public void createNewTask(RoutingContext routingContext) {
-        System.out.println("creating new task");
-
         String string = routingContext.getBody().toString();
-
         String[] requestParams = string.split("=");
-
         String taskName = requestParams[1];
-
-        System.out.println("-------task name : "+taskName);
-
-        Task requestNewTask = new Task(taskName);
-        this.taskList.addTask(requestNewTask);
-
-        System.out.println("task added");
+        this.taskList.addTask(taskName);
 
         HttpServerResponse response = routingContext.response();
         response.putHeader("HX-Redirect","/");

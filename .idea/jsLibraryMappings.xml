@@ -2,5 +2,6 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$" libraries="{alpinejs}" />
+    <file url="PROJECT" libraries="{@types/java}" />
   </component>
 </project>
