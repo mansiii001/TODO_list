@@ -22,4 +22,13 @@ public class TaskList {
             return null;
         }
     }
+
+    public void deleteTask(int taskID) {
+        try{
+            MySQLConnect mySQLConnect = new MySQLConnect();
+            mySQLConnect.deleteTask(taskID);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

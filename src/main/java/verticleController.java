@@ -1,6 +1,7 @@
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
+import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
@@ -20,6 +21,7 @@ public class verticleController extends AbstractVerticle {
 
         router.get("/").handler(this::getHomePage);
         router.post("/create_new_task").handler(BodyHandler.create()).handler(this::createNewTask);
+        router.post("/delete").handler(BodyHandler.create()).handler(this::deleteTask);
 
         HttpServer httpServer = vertx.createHttpServer();
         httpServer.requestHandler(router).listen(8080, "localhost", res->{
@@ -55,6 +57,19 @@ public class verticleController extends AbstractVerticle {
         String[] requestParams = string.split("=");
         String taskName = requestParams[1];
         this.taskList.addTask(taskName);
+
+        HttpServerResponse response = routingContext.response();
+        response.putHeader("HX-Redirect","/");
+        response.end();
+    }
+
+    private void deleteTask(RoutingContext routingContext) {
+        System.out.println("deleting task");
+
+        HttpServerRequest request = routingContext.request();
+        int taskID = Integer.parseInt(request.getParam("taskID"));
+
+        this.taskList.deleteTask(taskID);
 
         HttpServerResponse response = routingContext.response();
         response.putHeader("HX-Redirect","/");
