@@ -5,7 +5,6 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 
@@ -22,6 +21,7 @@ public class verticleController extends AbstractVerticle {
         router.get("/create_edit_task").handler(this::createEditTask);
         router.get("/delete").handler(this::deleteTask);
         router.get("/openCreatEditModal").handler(this::openCreateEditTaskModal);
+        router.get("/markCompleted").handler(this::markTaskCompleted);
 
         HttpServer httpServer = vertx.createHttpServer();
         httpServer.requestHandler(router).listen(8080, "localhost", res->{
@@ -31,6 +31,23 @@ public class verticleController extends AbstractVerticle {
                 System.out.println("HTTP server failed to start");
             }
         });
+    }
+
+    private void markTaskCompleted(RoutingContext routingContext) {
+        System.out.println("mark task completed");
+        HttpServerRequest request = routingContext.request();
+        int taskId = Integer.parseInt(request.getParam("taskId"));
+        Boolean isCompleted = this.taskList.getAllTasks().get(taskId).isCompleted;
+
+        System.out.println("-before-----is completed : "+isCompleted);
+
+        this.taskList.toggleCompleteCheckbox(taskId, isCompleted);
+
+        System.out.println("----after------- is completed : "+this.taskList.getAllTasks().get(taskId).isCompleted);
+
+        HttpServerResponse response = routingContext.response();
+        response.putHeader("HX-Redirect","/");
+        response.end();
     }
 
     public void getHomePage(RoutingContext routingContext) {

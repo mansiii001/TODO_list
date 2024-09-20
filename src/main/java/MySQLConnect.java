@@ -82,6 +82,22 @@ public class MySQLConnect {
         }
     }
 
+    public void markCompleted(Integer taskID, Boolean isCompleted) {
+        try{
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_list", "root", "12345678");
+            PreparedStatement prepareStatement = connect.prepareStatement("UPDATE todos set isCompleted = (?) where id = (?)");
+            prepareStatement.setBoolean(1, !isCompleted );
+            prepareStatement.setInt(2, taskID);
+            prepareStatement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        } finally {
+            close();
+        }
+    }
+
     private Map<Integer, Task> allResults(ResultSet resultSet) throws Exception {
         Map<Integer, Task> allData = new HashMap<>();
         while (resultSet.next()) {

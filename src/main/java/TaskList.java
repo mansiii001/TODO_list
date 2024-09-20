@@ -48,4 +48,13 @@ public class TaskList {
             e.printStackTrace();
         }
     }
+
+    public void toggleCompleteCheckbox(Integer taskId, Boolean isCompleted) {
+        try {
+            MySQLConnect mySQLConnect = new MySQLConnect();
+            mySQLConnect.markCompleted(taskId, isCompleted);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
