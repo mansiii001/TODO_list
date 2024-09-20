@@ -47,7 +47,7 @@
             <tbody>
             <tr class="border border-solid border-gray-900 text-gray-900 hover:bg-gray-50 " th:each="task, iter : ${tasks}">
                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap" th:text="${iter.count}"></td>
-                <td class="px-6 py-4" th:text="${task.value}"></td>
+                <td class="px-6 py-4" th:text="${task.value.taskName}"></td>
                 <td
                         class="px-6 py-4 font-medium text-white"
                         th:attr="hx-get='/delete?taskID='+${task.key}"

@@ -13,10 +13,10 @@ public class TaskList {
         }
     }
 
-    public Map<Integer, String> getAllTasks() {
+    public Map<Integer, Task> getAllTasks() {
         try{
             MySQLConnect mySQLConnect = new MySQLConnect();
-            Map<Integer, String> allTasks = mySQLConnect.readDataBase();
+            Map<Integer, Task> allTasks = mySQLConnect.readDataBase();
             return sortTasks(allTasks);
 
         } catch (Exception e) {
@@ -25,8 +25,8 @@ public class TaskList {
         }
     }
 
-    private Map<Integer, String> sortTasks(Map<Integer, String> allTasks){
-        Map<Integer, String> sortedTreeMap = new TreeMap<>(Comparator.naturalOrder());
+    private Map<Integer, Task> sortTasks(Map<Integer, Task> allTasks){
+        Map<Integer, Task> sortedTreeMap = new TreeMap<>(Comparator.naturalOrder());
         sortedTreeMap.putAll(allTasks);
         return sortedTreeMap;
     }

@@ -7,7 +7,7 @@ public class MySQLConnect {
     private Statement statement = null;
     private ResultSet resultSet = null;
 
-    public Map<Integer, String> readDataBase() throws Exception {
+    public Map<Integer, Task> readDataBase() throws Exception {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_list", "root", "12345678");
@@ -57,8 +57,8 @@ public class MySQLConnect {
             PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM todos where id = (?)");
             preparedStatement.setInt(1, taskID);
             resultSet = preparedStatement.executeQuery();
-            Map<Integer, String> taskResult = allResults(resultSet);
-            return taskResult.get(taskID);
+            Map<Integer, Task> taskResult = allResults(resultSet);
+            return taskResult.get(taskID).taskName;
 
         } catch (Exception e){
             throw new Exception(e.getMessage());
@@ -82,12 +82,12 @@ public class MySQLConnect {
         }
     }
 
-    private Map<Integer, String> allResults(ResultSet resultSet) throws Exception {
-        Map<Integer, String> allData = new HashMap<>();
+    private Map<Integer, Task> allResults(ResultSet resultSet) throws Exception {
+        Map<Integer, Task> allData = new HashMap<>();
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
             String task = resultSet.getString("task");
-            allData.put(id, task);
+            allData.put(id, new Task(task));
         }
         return allData;
     }
