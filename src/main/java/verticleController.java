@@ -22,6 +22,7 @@ public class verticleController extends AbstractVerticle {
         router.get("/").handler(this::getHomePage);
         router.post("/create_new_task").handler(BodyHandler.create()).handler(this::createNewTask);
         router.post("/delete").handler(BodyHandler.create()).handler(this::deleteTask);
+        router.get("/openCreateTaskModal").handler(this::openCreateTaskModal);
 
         HttpServer httpServer = vertx.createHttpServer();
         httpServer.requestHandler(router).listen(8080, "localhost", res->{
@@ -47,6 +48,20 @@ public class verticleController extends AbstractVerticle {
                 response.end(res.result());
             } else {
                 System.out.println("failed");
+                res.cause().printStackTrace();
+            }
+        });
+    }
+
+    public void openCreateTaskModal(RoutingContext routingContext) {
+        final ThymeleafTemplateEngine engine = ThymeleafTemplateEngine.create(vertx);
+
+        HttpServerResponse response = routingContext.response();
+
+        engine.render(routingContext.data(), "src/main/resources/modalCreateTask.html").onComplete(res -> {
+            if (res.succeeded()) {
+                response.end(res.result());
+            } else {
                 res.cause().printStackTrace();
             }
         });
