@@ -41,8 +41,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" th:each="task : ${tasks}">
-                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" th:text="${task.key}"></td>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" th:each="task, iter : ${tasks}">
+                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" th:text="${iter.count}"></td>
                 <td class="px-6 py-4" th:text="${task.value}"></td>
                 <td
                         class="px-6 py-4 font-medium text-white"
