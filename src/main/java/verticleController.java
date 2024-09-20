@@ -73,7 +73,6 @@ public class verticleController extends AbstractVerticle {
 
         engine.render(routingContext.data(), "src/main/resources/modalCreateTask.html").onComplete(res -> {
             if (res.succeeded()) {
-                response.putHeader("content-type", "text/html");
                 response.end(res.result());
             } else {
                 res.cause().printStackTrace();
