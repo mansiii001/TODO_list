@@ -67,6 +67,21 @@ public class MySQLConnect {
         }
     }
 
+    public void editTask(Integer taskID, String taskName) {
+        try {
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_list", "root", "12345678");
+            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE todos set task = (?) where id = (?)");
+            preparedStatement.setString(1, taskName);
+            preparedStatement.setInt(2, taskID);
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        } finally {
+            close();
+        }
+    }
+
     private Map<Integer, String> allResults(ResultSet resultSet) throws Exception {
         Map<Integer, String> allData = new HashMap<>();
         while (resultSet.next()) {

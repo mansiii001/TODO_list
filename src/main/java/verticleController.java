@@ -19,7 +19,7 @@ public class verticleController extends AbstractVerticle {
         router.route("/static/*").handler(StaticHandler.create());
 
         router.get("/").handler(this::getHomePage);
-        router.post("/create_new_task").handler(BodyHandler.create()).handler(this::createNewTask);
+        router.post("/create_edit_task").handler(BodyHandler.create()).handler(this::createNewTask);
         router.post("/delete").handler(BodyHandler.create()).handler(this::deleteTask);
         router.get("/openCreatEditModal").handler(this::openCreateEditTaskModal);
 
@@ -65,6 +65,7 @@ public class verticleController extends AbstractVerticle {
                 MySQLConnect mySQLConnect = new MySQLConnect();
                 String task = mySQLConnect.findTask(Integer.parseInt(taskID));
                 routingContext.put("task", task);
+                routingContext.put("taskID", taskID);
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -81,9 +82,30 @@ public class verticleController extends AbstractVerticle {
 
     public void createNewTask(RoutingContext routingContext) {
         String string = routingContext.getBody().toString();
-        String[] requestParams = string.split("=");
-        String taskName = requestParams[1];
-        this.taskList.addTask(taskName);
+        String[] requestParams = string.split("&");
+
+        String taskID = null;
+        String taskName = null;
+
+        for(String param : requestParams) {
+            String[] params = param.split("=");
+            if (params[0].equals("task_id")) {
+                try {
+                    taskID = params[1];
+                } catch (Exception e) {
+                    taskID = null;
+                }
+            }
+            if (params[0].equals("new_task")) {
+                taskName = params[1];
+            }
+        }
+
+        if (taskID == null) {
+            this.taskList.addTask(taskName);
+        } else {
+            this.taskList.editTask(Integer.parseInt(taskID), taskName);
+        }
 
         HttpServerResponse response = routingContext.response();
         response.putHeader("HX-Redirect","/");

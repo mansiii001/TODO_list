@@ -31,4 +31,13 @@ public class TaskList {
             throw new RuntimeException(e);
         }
     }
+
+    public void editTask(Integer taskID, String taskName) {
+        try{
+            MySQLConnect mySQLConnect = new MySQLConnect();
+            mySQLConnect.editTask(taskID, taskName);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

@@ -23,14 +23,17 @@
             </div>
 
             <div class="relative flex-auto mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                <label>New Task : <input class="rounded-md p-3 m-3 bg-gray-100 w-10/12" type="text" id="new_task" name="new_task" th:value="${task}"/></label>
+                <label>New Task :
+                    <input class="rounded-md p-3 m-3 bg-gray-100 w-10/12" type="text" id="new_task" name="new_task" th:value="${task}"/>
+                    <input type="hidden" id="task_id" name="task_id" th:value="${taskID}">
+                </label>
             </div>
 
             <div class="flex flex-wrap relative shrink-0 items-center justify-end p-3 border-t border-solid border-gray-500 rounded-b m-1">
                 <button
                         @click="open = false"
-                        hx-post="/create_new_task"
-                        hx-include="input[type='text']"
+                        hx-post="/create_edit_task"
+                        hx-include="[name='new_task'], [name='task_id']"
                         class="rounded-md bg-gray-900 px-3 py-2 mr-1.5 text-sm font-medium text-gray-50 hover:text-gray-900 hover:bg-gray-50 hover:border-gray-900"
                         type="submit"
                 >
