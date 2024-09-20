@@ -19,8 +19,8 @@ public class verticleController extends AbstractVerticle {
         router.route("/static/*").handler(StaticHandler.create());
 
         router.get("/").handler(this::getHomePage);
-        router.post("/create_edit_task").handler(BodyHandler.create()).handler(this::createEditTask);
-        router.post("/delete").handler(BodyHandler.create()).handler(this::deleteTask);
+        router.get("/create_edit_task").handler(this::createEditTask);
+        router.get("/delete").handler(this::deleteTask);
         router.get("/openCreatEditModal").handler(this::openCreateEditTaskModal);
 
         HttpServer httpServer = vertx.createHttpServer();
@@ -73,6 +73,7 @@ public class verticleController extends AbstractVerticle {
 
         engine.render(routingContext.data(), "src/main/resources/modalCreateTask.html").onComplete(res -> {
             if (res.succeeded()) {
+                response.putHeader("content-type", "text/html");
                 response.end(res.result());
             } else {
                 res.cause().printStackTrace();
@@ -81,30 +82,14 @@ public class verticleController extends AbstractVerticle {
     }
 
     public void createEditTask(RoutingContext routingContext) {
-        String string = routingContext.getBody().toString();
-        String[] requestParams = string.split("&");
+        HttpServerRequest request = routingContext.request();
+        String taskId = request.getParam("task_id");
+        String taskName = request.getParam("new_task");
 
-        String taskID = null;
-        String taskName = null;
-
-        for(String param : requestParams) {
-            String[] params = param.split("=");
-            if (params[0].equals("task_id")) {
-                try {
-                    taskID = params[1];
-                } catch (Exception e) {
-                    taskID = null;
-                }
-            }
-            if (params[0].equals("new_task")) {
-                taskName = params[1];
-            }
-        }
-
-        if (taskID == null) {
+        if (taskId == null) {
             this.taskList.addTask(taskName);
         } else {
-            this.taskList.editTask(Integer.parseInt(taskID), taskName);
+            this.taskList.editTask(Integer.parseInt(taskId), taskName);
         }
 
         HttpServerResponse response = routingContext.response();
