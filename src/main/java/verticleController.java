@@ -39,9 +39,9 @@ public class verticleController extends AbstractVerticle {
         HttpServerResponse response = routingContext.response();
         response.putHeader("content-type", "text/html");
 
-        JsonObject jsonObject = new JsonObject().put("tasks", this.taskList.getAllTasks());
+        routingContext.put("tasks", this.taskList.getAllTasks());
 
-        engine.render(jsonObject, "src/main/resources/HomePage.html").onComplete(res -> {
+        engine.render(routingContext.data(), "src/main/resources/HomePage.html").onComplete(res -> {
             if (res.succeeded()) {
                 System.out.println("success");
                 response.end(res.result());
