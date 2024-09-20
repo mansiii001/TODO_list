@@ -7,10 +7,14 @@ public class MySQLConnect {
     private Statement statement = null;
     private ResultSet resultSet = null;
 
+    private static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_list", "root", "12345678");
+    }
+
     public Map<Integer, Task> readDataBase() throws Exception {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_list", "root", "12345678");
+            connect = getConnection();
             statement = connect.createStatement();
             resultSet = statement.executeQuery("select * from todos");
 
@@ -25,7 +29,7 @@ public class MySQLConnect {
 
     public void createNewTask(String task) throws Exception {
         try {
-            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_list", "root", "12345678");
+            connect = getConnection();
             PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO todos (task) VALUES (?)");
             preparedStatement.setString(1, task);
             preparedStatement.executeUpdate();
@@ -39,7 +43,7 @@ public class MySQLConnect {
 
     public void deleteTask(int taskID) throws Exception {
         try {
-            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_list", "root", "12345678");
+            connect = getConnection();
             PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM todos where id = (?)");
             preparedStatement.setInt(1, taskID);
             preparedStatement.executeUpdate();
@@ -53,7 +57,7 @@ public class MySQLConnect {
 
     public String findTask(Integer taskID) throws Exception {
         try {
-            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_list", "root", "12345678");
+            connect = getConnection();
             PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM todos where id = (?)");
             preparedStatement.setInt(1, taskID);
             resultSet = preparedStatement.executeQuery();
@@ -69,7 +73,7 @@ public class MySQLConnect {
 
     public void editTask(Integer taskID, String taskName) {
         try {
-            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_list", "root", "12345678");
+            connect = getConnection();
             PreparedStatement preparedStatement = connect.prepareStatement("UPDATE todos set task = (?) where id = (?)");
             preparedStatement.setString(1, taskName);
             preparedStatement.setInt(2, taskID);
@@ -84,7 +88,7 @@ public class MySQLConnect {
 
     public void markCompleted(Integer taskID, Boolean isCompleted) {
         try{
-            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_list", "root", "12345678");
+            connect = getConnection();
             PreparedStatement prepareStatement = connect.prepareStatement("UPDATE todos set isCompleted = (?) where id = (?)");
             prepareStatement.setBoolean(1, !isCompleted );
             prepareStatement.setInt(2, taskID);
