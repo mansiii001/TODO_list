@@ -50,7 +50,7 @@
                 <td class="px-6 py-4" th:text="${task.value}"></td>
                 <td
                         class="px-6 py-4 font-medium text-white"
-                        th:attr="hx-post='/delete?taskID='+${task.key}"
+                        th:attr="hx-get='/delete?taskID='+${task.key}"
                 >
                     <div class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</div>
                 </td>
