@@ -73,7 +73,6 @@ public class verticleController extends AbstractVerticle {
 
         engine.render(routingContext.data(), "src/main/resources/modalCreateTask.html").onComplete(res -> {
             if (res.succeeded()) {
-                response.putHeader("content-type", "text/html");
                 response.end(res.result());
             } else {
                 res.cause().printStackTrace();
@@ -82,14 +81,30 @@ public class verticleController extends AbstractVerticle {
     }
 
     public void createEditTask(RoutingContext routingContext) {
-        HttpServerRequest request = routingContext.request();
-        String taskId = request.getParam("task_id");
-        String taskName = request.getParam("new_task");
+        String string = routingContext.getBody().toString();
+        String[] requestParams = string.split("&");
 
-        if (taskId.isEmpty()) {
+        String taskID = null;
+        String taskName = null;
+
+        for(String param : requestParams) {
+            String[] params = param.split("=");
+            if (params[0].equals("task_id")) {
+                try {
+                    taskID = params[1];
+                } catch (Exception e) {
+                    taskID = null;
+                }
+            }
+            if (params[0].equals("new_task")) {
+                taskName = params[1];
+            }
+        }
+
+        if (taskID == null) {
             this.taskList.addTask(taskName);
         } else {
-            this.taskList.editTask(Integer.parseInt(taskId), taskName);
+            this.taskList.editTask(Integer.parseInt(taskID), taskName);
         }
 
         HttpServerResponse response = routingContext.response();
