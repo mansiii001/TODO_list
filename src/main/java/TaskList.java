@@ -1,4 +1,6 @@
+import java.util.Comparator;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class TaskList {
 
@@ -15,12 +17,18 @@ public class TaskList {
         try{
             MySQLConnect mySQLConnect = new MySQLConnect();
             Map<Integer, String> allTasks = mySQLConnect.readDataBase();
-            return allTasks;
+            return sortTasks(allTasks);
 
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private Map<Integer, String> sortTasks(Map<Integer, String> allTasks){
+        Map<Integer, String> sortedTreeMap = new TreeMap<>(Comparator.naturalOrder());
+        sortedTreeMap.putAll(allTasks);
+        return sortedTreeMap;
     }
 
     public void deleteTask(int taskID) {
