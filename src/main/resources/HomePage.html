@@ -19,7 +19,7 @@
                     <button
                         class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
                         @click="open = !open"
-                        hx-get="/openCreateTaskModal"
+                        hx-get="/openCreatEditModal"
                         hx-target="#modalCreateTask"
                         hx-swap="innerHTML"
                     >
@@ -41,6 +41,7 @@
                     Task to be Perform
                 </th>
                 <th scope="col" class="px-6 py-3"></th>
+                <th scope="col" class="px-6 py-3"></th>
             </tr>
             </thead>
             <tbody>
@@ -52,6 +53,16 @@
                         th:attr="hx-post='/delete?taskID='+${task.key}"
                 >
                     <div class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</div>
+                </td>
+                <th scope="col" class="px-6 py-3"></th>
+                <td
+                        class="px-6 py-4 font-medium text-white"
+                        @click="open = !open"
+                        th:attr="hx-get='/openCreatEditModal?taskID='+${task.key}"
+                        hx-target="#modalCreateTask"
+                        hx-swap="innerHTML"
+                >
+                    <div class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</div>
                 </td>
             </tr>
             </tbody>

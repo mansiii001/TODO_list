@@ -3,7 +3,6 @@ import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
-import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
@@ -22,7 +21,7 @@ public class verticleController extends AbstractVerticle {
         router.get("/").handler(this::getHomePage);
         router.post("/create_new_task").handler(BodyHandler.create()).handler(this::createNewTask);
         router.post("/delete").handler(BodyHandler.create()).handler(this::deleteTask);
-        router.get("/openCreateTaskModal").handler(this::openCreateTaskModal);
+        router.get("/openCreatEditModal").handler(this::openCreateEditTaskModal);
 
         HttpServer httpServer = vertx.createHttpServer();
         httpServer.requestHandler(router).listen(8080, "localhost", res->{
@@ -53,10 +52,23 @@ public class verticleController extends AbstractVerticle {
         });
     }
 
-    public void openCreateTaskModal(RoutingContext routingContext) {
+    public void openCreateEditTaskModal(RoutingContext routingContext) {
         final ThymeleafTemplateEngine engine = ThymeleafTemplateEngine.create(vertx);
 
+        HttpServerRequest request = routingContext.request();
         HttpServerResponse response = routingContext.response();
+
+        String taskID = request.getParam("taskID");
+
+        if(taskID != null) {
+            try {
+                MySQLConnect mySQLConnect = new MySQLConnect();
+                String task = mySQLConnect.findTask(Integer.parseInt(taskID));
+                routingContext.put("task", task);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
 
         engine.render(routingContext.data(), "src/main/resources/modalCreateTask.html").onComplete(res -> {
             if (res.succeeded()) {
