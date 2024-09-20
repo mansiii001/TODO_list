@@ -19,7 +19,7 @@ public class verticleController extends AbstractVerticle {
         router.route("/static/*").handler(StaticHandler.create());
 
         router.get("/").handler(this::getHomePage);
-        router.post("/create_edit_task").handler(BodyHandler.create()).handler(this::createNewTask);
+        router.post("/create_edit_task").handler(BodyHandler.create()).handler(this::createEditTask);
         router.post("/delete").handler(BodyHandler.create()).handler(this::deleteTask);
         router.get("/openCreatEditModal").handler(this::openCreateEditTaskModal);
 
@@ -80,7 +80,7 @@ public class verticleController extends AbstractVerticle {
         });
     }
 
-    public void createNewTask(RoutingContext routingContext) {
+    public void createEditTask(RoutingContext routingContext) {
         String string = routingContext.getBody().toString();
         String[] requestParams = string.split("&");
 
