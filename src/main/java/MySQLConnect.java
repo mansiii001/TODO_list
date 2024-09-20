@@ -87,7 +87,8 @@ public class MySQLConnect {
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
             String task = resultSet.getString("task");
-            allData.put(id, new Task(task));
+            boolean isCompleted = resultSet.getBoolean("isCompleted");
+            allData.put(id, new Task(task, isCompleted));
         }
         return allData;
     }
