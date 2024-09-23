@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +26,33 @@ public class MySQLConnect {
         } finally {
             close();
         }
+    }
+
+    public ArrayList<newTask> readAll() throws Exception {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connect = getConnection();
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery("select * from todos");
+
+            return returnResultSet(resultSet);
+
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        } finally {
+            close();
+        }
+    }
+
+    private ArrayList<newTask> returnResultSet(ResultSet resultSet) throws SQLException {
+        ArrayList<newTask> tasks = new ArrayList<>();
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String taskName = resultSet.getString("task");
+            boolean isDone = resultSet.getBoolean("isCompleted");
+            tasks.add(new newTask(id, taskName, isDone));
+        }
+        return tasks;
     }
 
     public void createNewTask(String task) throws Exception {

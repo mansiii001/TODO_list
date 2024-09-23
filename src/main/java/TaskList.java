@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
@@ -13,11 +14,11 @@ public class TaskList {
         }
     }
 
-    public Map<Integer, Task> getAllTasks() {
+    public ArrayList<newTask> getAllTasks() {
         try{
             MySQLConnect mySQLConnect = new MySQLConnect();
-            Map<Integer, Task> allTasks = mySQLConnect.readDataBase();
-            return sortTasks(allTasks);
+            ArrayList<newTask> taskArrayList = mySQLConnect.readAll();
+            return taskArrayList;
 
         } catch (Exception e) {
             e.printStackTrace();

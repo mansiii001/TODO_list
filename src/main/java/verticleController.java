@@ -8,6 +8,8 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 
+import java.util.ArrayList;
+
 public class verticleController extends AbstractVerticle {
     TaskList taskList = new TaskList();
 
@@ -37,13 +39,18 @@ public class verticleController extends AbstractVerticle {
         System.out.println("mark task completed");
         HttpServerRequest request = routingContext.request();
         int taskId = Integer.parseInt(request.getParam("taskId"));
-        Boolean isCompleted = this.taskList.getAllTasks().get(taskId).isCompleted;
+        boolean isCompleted = false;
+        ArrayList<newTask> allTasks = this.taskList.getAllTasks();
+
+        for(newTask task : allTasks) {
+            if (task.id == taskId) {
+                isCompleted = task.isDone;
+            }
+        }
 
         System.out.println("-before-----is completed : "+isCompleted);
 
         this.taskList.toggleCompleteCheckbox(taskId, isCompleted);
-
-        System.out.println("----after------- is completed : "+this.taskList.getAllTasks().get(taskId).isCompleted);
 
         HttpServerResponse response = routingContext.response();
         response.putHeader("HX-Redirect","/");
