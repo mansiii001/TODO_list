@@ -1,7 +1,5 @@
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MySQLConnect {
     private Connection connect = null;

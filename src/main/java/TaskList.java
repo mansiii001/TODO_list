@@ -26,12 +26,6 @@ public class TaskList {
         }
     }
 
-    private Map<Integer, Task> sortTasks(Map<Integer, Task> allTasks){
-        Map<Integer, Task> sortedTreeMap = new TreeMap<>(Comparator.naturalOrder());
-        sortedTreeMap.putAll(allTasks);
-        return sortedTreeMap;
-    }
-
     public void deleteTask(int taskID) {
         try{
             MySQLConnect mySQLConnect = new MySQLConnect();
