@@ -114,17 +114,6 @@ public class MySQLConnect {
         }
     }
 
-    private Map<Integer, Task> allResults(ResultSet resultSet) throws Exception {
-        Map<Integer, Task> allData = new HashMap<>();
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String task = resultSet.getString("task");
-            boolean isCompleted = resultSet.getBoolean("isCompleted");
-            allData.put(id, new Task(task, isCompleted));
-        }
-        return allData;
-    }
-
     private void close() {
         try {
             if (resultSet != null) {
