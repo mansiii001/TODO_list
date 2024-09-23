@@ -73,8 +73,8 @@ public class MySQLConnect {
             PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM todos where id = (?)");
             preparedStatement.setInt(1, taskID);
             resultSet = preparedStatement.executeQuery();
-            Map<Integer, Task> taskResult = allResults(resultSet);
-            return taskResult.get(taskID).taskName;
+            ArrayList<newTask> taskArrayList = returnResultSet(resultSet);
+            return taskArrayList.get(0).taskName;
 
         } catch (Exception e){
             throw new Exception(e.getMessage());
