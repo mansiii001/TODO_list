@@ -12,22 +12,6 @@ public class MySQLConnect {
         return DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_list", "root", "12345678");
     }
 
-    public Map<Integer, Task> readDataBase() throws Exception {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connect = getConnection();
-            statement = connect.createStatement();
-            resultSet = statement.executeQuery("select * from todos");
-
-            return allResults(resultSet);
-
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
-        } finally {
-            close();
-        }
-    }
-
     public ArrayList<newTask> readAll() throws Exception {
         try {
             Class.forName("com.mysql.jdbc.Driver");
