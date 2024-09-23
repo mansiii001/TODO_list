@@ -15,22 +15,12 @@ public class TaskList {
     public List<Task> getAllTasks() {
         try{
             MySQLConnect mySQLConnect = new MySQLConnect();
-            ArrayList<Task> taskArrayList = mySQLConnect.readAll();
-            return arrangeTaskOrder(taskArrayList);
+            return mySQLConnect.readAll();
 
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-    }
-
-    private List<Task> arrangeTaskOrder(ArrayList<Task> taskArrayList) {
-        ArrayList<Task> arrangedTasks = new ArrayList<>();
-
-        arrangedTasks.addAll(unCheckedTasks(taskArrayList));
-        arrangedTasks.addAll(checkedTasks(taskArrayList));
-
-        return arrangedTasks;
     }
 
     public List<Task> allUnCkecked() {
