@@ -106,6 +106,11 @@ public class verticleController extends AbstractVerticle {
         String taskId = request.getParam("task_id");
         String taskName = request.getParam("new_task");
 
+        if(taskName.isEmpty()){
+            routingContext.response().setStatusCode(400).end("empty task name");
+            return;
+        }
+
         if (taskId.isEmpty()) {
             this.taskList.addTask(taskName);
         } else {
