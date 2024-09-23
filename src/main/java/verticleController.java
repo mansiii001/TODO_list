@@ -8,7 +8,7 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class verticleController extends AbstractVerticle {
@@ -41,7 +41,7 @@ public class verticleController extends AbstractVerticle {
         HttpServerRequest request = routingContext.request();
         int taskId = Integer.parseInt(request.getParam("taskId"));
 
-        ArrayList<newTask> allTasks = this.taskList.getAllTasks();
+        List<newTask> allTasks = this.taskList.getAllTasks();
         newTask filteredTask = allTasks.stream().filter(task -> task.id == taskId).collect(Collectors.toList()).get(0);
         boolean isCompleted = filteredTask.isDone;
 

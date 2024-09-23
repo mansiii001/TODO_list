@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class TaskList {
 
@@ -14,16 +12,33 @@ public class TaskList {
         }
     }
 
-    public ArrayList<newTask> getAllTasks() {
+    public List<newTask> getAllTasks() {
         try{
             MySQLConnect mySQLConnect = new MySQLConnect();
             ArrayList<newTask> taskArrayList = mySQLConnect.readAll();
-            return taskArrayList;
+            return arrangeTaskOrder(taskArrayList);
 
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private List<newTask> arrangeTaskOrder(ArrayList<newTask> taskArrayList) {
+        ArrayList<newTask> arrangedTasks = new ArrayList<>();
+
+        arrangedTasks.addAll(unCheckedTasks(taskArrayList));
+        arrangedTasks.addAll(checkedTasks(taskArrayList));
+
+        return arrangedTasks;
+    }
+
+    private List<newTask> unCheckedTasks(ArrayList<newTask> taskArrayList) {
+        return taskArrayList.stream().filter(task -> !task.isDone).collect(Collectors.toList());
+    }
+
+    private List<newTask> checkedTasks(ArrayList<newTask> taskArrayList) {
+        return taskArrayList.stream().filter(task -> task.isDone).collect(Collectors.toList());
     }
 
     public void deleteTask(int taskID) {
