@@ -36,6 +36,18 @@
 
     <dependency>
       <groupId>io.vertx</groupId>
+      <artifactId>vertx-json-schema</artifactId>
+      <version>4.5.10</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web-validation</artifactId>
+      <version>4.5.10</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.vertx</groupId>
       <artifactId>vertx-web-templ-thymeleaf</artifactId>
       <version>4.5.10</version>
     </dependency>
