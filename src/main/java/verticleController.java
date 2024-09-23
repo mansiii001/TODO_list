@@ -58,7 +58,8 @@ public class verticleController extends AbstractVerticle {
         HttpServerResponse response = routingContext.response();
         response.putHeader("content-type", "text/html");
 
-        routingContext.put("tasks", this.taskList.getAllTasks());
+        routingContext.put("uncheckedTasks", this.taskList.allUnCkecked());
+        routingContext.put("checkedTasks", this.taskList.allCkecked());
 
         engine.render(routingContext.data(), "src/main/resources/HomePage.html").onComplete(res -> {
             if (res.succeeded()) {

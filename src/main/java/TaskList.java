@@ -33,6 +33,30 @@ public class TaskList {
         return arrangedTasks;
     }
 
+    public List<Task> allUnCkecked() {
+        try{
+            MySQLConnect mySQLConnect = new MySQLConnect();
+            ArrayList<Task> taskArrayList = mySQLConnect.readAll();
+            return unCheckedTasks(taskArrayList);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Object allCkecked() {
+        try{
+            MySQLConnect mySQLConnect = new MySQLConnect();
+            ArrayList<Task> taskArrayList = mySQLConnect.readAll();
+            return checkedTasks(taskArrayList);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private List<Task> unCheckedTasks(ArrayList<Task> taskArrayList) {
         return taskArrayList.stream().filter(task -> !task.isDone).collect(Collectors.toList());
     }
