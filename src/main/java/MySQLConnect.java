@@ -10,7 +10,7 @@ public class MySQLConnect {
         return DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_list", "root", "12345678");
     }
 
-    public ArrayList<newTask> readAll() throws Exception {
+    public ArrayList<Task> readAll() throws Exception {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connect = getConnection();
@@ -26,13 +26,13 @@ public class MySQLConnect {
         }
     }
 
-    private ArrayList<newTask> returnResultSet(ResultSet resultSet) throws SQLException {
-        ArrayList<newTask> tasks = new ArrayList<>();
+    private ArrayList<Task> returnResultSet(ResultSet resultSet) throws SQLException {
+        ArrayList<Task> tasks = new ArrayList<>();
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
             String taskName = resultSet.getString("task");
             boolean isDone = resultSet.getBoolean("isCompleted");
-            tasks.add(new newTask(id, taskName, isDone));
+            tasks.add(new Task(id, taskName, isDone));
         }
         return tasks;
     }
@@ -71,7 +71,7 @@ public class MySQLConnect {
             PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM todos where id = (?)");
             preparedStatement.setInt(1, taskID);
             resultSet = preparedStatement.executeQuery();
-            ArrayList<newTask> taskArrayList = returnResultSet(resultSet);
+            ArrayList<Task> taskArrayList = returnResultSet(resultSet);
             return taskArrayList.get(0).taskName;
 
         } catch (Exception e){

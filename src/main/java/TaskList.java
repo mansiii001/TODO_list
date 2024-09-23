@@ -12,10 +12,10 @@ public class TaskList {
         }
     }
 
-    public List<newTask> getAllTasks() {
+    public List<Task> getAllTasks() {
         try{
             MySQLConnect mySQLConnect = new MySQLConnect();
-            ArrayList<newTask> taskArrayList = mySQLConnect.readAll();
+            ArrayList<Task> taskArrayList = mySQLConnect.readAll();
             return arrangeTaskOrder(taskArrayList);
 
         } catch (Exception e) {
@@ -24,8 +24,8 @@ public class TaskList {
         }
     }
 
-    private List<newTask> arrangeTaskOrder(ArrayList<newTask> taskArrayList) {
-        ArrayList<newTask> arrangedTasks = new ArrayList<>();
+    private List<Task> arrangeTaskOrder(ArrayList<Task> taskArrayList) {
+        ArrayList<Task> arrangedTasks = new ArrayList<>();
 
         arrangedTasks.addAll(unCheckedTasks(taskArrayList));
         arrangedTasks.addAll(checkedTasks(taskArrayList));
@@ -33,11 +33,11 @@ public class TaskList {
         return arrangedTasks;
     }
 
-    private List<newTask> unCheckedTasks(ArrayList<newTask> taskArrayList) {
+    private List<Task> unCheckedTasks(ArrayList<Task> taskArrayList) {
         return taskArrayList.stream().filter(task -> !task.isDone).collect(Collectors.toList());
     }
 
-    private List<newTask> checkedTasks(ArrayList<newTask> taskArrayList) {
+    private List<Task> checkedTasks(ArrayList<Task> taskArrayList) {
         return taskArrayList.stream().filter(task -> task.isDone).collect(Collectors.toList());
     }
 

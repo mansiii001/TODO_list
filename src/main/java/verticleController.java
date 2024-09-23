@@ -41,8 +41,8 @@ public class verticleController extends AbstractVerticle {
         HttpServerRequest request = routingContext.request();
         int taskId = Integer.parseInt(request.getParam("taskId"));
 
-        List<newTask> allTasks = this.taskList.getAllTasks();
-        newTask filteredTask = allTasks.stream().filter(task -> task.id == taskId).collect(Collectors.toList()).get(0);
+        List<Task> allTasks = this.taskList.getAllTasks();
+        Task filteredTask = allTasks.stream().filter(task -> task.id == taskId).collect(Collectors.toList()).get(0);
         boolean isCompleted = filteredTask.isDone;
 
         this.taskList.toggleCompleteCheckbox(taskId, isCompleted);
