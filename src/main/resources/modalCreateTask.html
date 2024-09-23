@@ -1,4 +1,5 @@
-<form ID="create_edit_form" hx-get="/create_edit_task" hx-target="#all_task" hx-swap="innerHTML" x-show="open">
+<form ID="create_edit_form" hx-get="/create_edit_task" hx-trigger="submit" x-on:submit="open = false"
+      hx-target="#all_task" hx-swap="innerHTML" x-show="open" xmlns:x-on="http://www.w3.org/1999/xhtml">
     <div
             class="fixed top-0 left-0 z-10 w-full h-full overflow-x-hidden overflow-y-auto outline-0 backdrop-blur"
             x-show="open"
@@ -25,14 +26,13 @@
 
                 <div class="relative flex-auto mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <label>New Task :
-                        <input class="rounded-md p-3 m-3 bg-gray-100 w-10/12" type="text" id="new_task" name="new_task" th:value="${task}"/>
+                        <input class="rounded-md p-3 m-3 bg-gray-100 w-10/12" type="text" id="new_task" name="new_task" th:value="${task}" required/>
                         <input type="hidden" id="task_id" name="task_id" th:value="${taskID}">
                     </label>
                 </div>
 
                 <div class="flex flex-wrap relative shrink-0 items-center justify-end p-3 border-t border-solid border-gray-500 rounded-b m-1">
                     <button
-                            @click="open = false"
                             class="rounded-md bg-gray-900 px-3 py-2 mr-1.5 text-sm font-medium text-gray-50 hover:text-gray-900 hover:bg-gray-50 hover:border-gray-900"
                             type="submit"
                             id="submit"
