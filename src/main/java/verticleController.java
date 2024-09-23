@@ -9,6 +9,7 @@ import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class verticleController extends AbstractVerticle {
     TaskList taskList = new TaskList();
@@ -39,16 +40,10 @@ public class verticleController extends AbstractVerticle {
         System.out.println("mark task completed");
         HttpServerRequest request = routingContext.request();
         int taskId = Integer.parseInt(request.getParam("taskId"));
-        boolean isCompleted = false;
+
         ArrayList<newTask> allTasks = this.taskList.getAllTasks();
-
-        for(newTask task : allTasks) {
-            if (task.id == taskId) {
-                isCompleted = task.isDone;
-            }
-        }
-
-        System.out.println("-before-----is completed : "+isCompleted);
+        newTask filteredTask = allTasks.stream().filter(task -> task.id == taskId).collect(Collectors.toList()).get(0);
+        boolean isCompleted = filteredTask.isDone;
 
         this.taskList.toggleCompleteCheckbox(taskId, isCompleted);
 
