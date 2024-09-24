@@ -80,15 +80,10 @@ public class verticleController extends AbstractVerticle {
 
         String taskID = request.getParam("taskID");
 
-        if(taskID != null) {
-            try {
-                MySQLConnect mySQLConnect = new MySQLConnect();
-                String task = mySQLConnect.findTask(Integer.parseInt(taskID));
-                routingContext.put("task", task);
-                routingContext.put("taskID", taskID);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+        if (taskID != null) {
+            String taskToBeEdit = this.taskList.getTaskToBeEdit(Integer.parseInt(taskID));
+            routingContext.put("task", taskToBeEdit);
+            routingContext.put("taskID", taskID);
         }
 
         engine.render(routingContext.data(), "src/main/resources/modalCreateTask.html").onComplete(res -> {

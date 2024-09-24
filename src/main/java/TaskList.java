@@ -35,6 +35,17 @@ public class TaskList {
         }
     }
 
+    public static String getTaskToBeEdit(int taskID) {
+        try {
+            MySQLConnect mySQLConnect = new MySQLConnect();
+            String task = mySQLConnect.findTask(taskID);
+            return task;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public Object allCkecked() {
         try{
             MySQLConnect mySQLConnect = new MySQLConnect();
