@@ -7,10 +7,24 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 
 public class verticleController extends AbstractVerticle {
+
+    private ThymeleafTemplateEngine engine;
     TaskList taskList = new TaskList();
+
+    public verticleController() {
+        this.engine = ThymeleafTemplateEngine.create(vertx);
+        configureThymeleafEngine(engine);
+    }
+
+    private void configureThymeleafEngine(ThymeleafTemplateEngine engine) {
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setSuffix(".html");
+        engine.getThymeleafTemplateEngine().setTemplateResolver(templateResolver);
+    }
 
     @Override
     public void start() throws Exception {
@@ -20,10 +34,10 @@ public class verticleController extends AbstractVerticle {
 
         controllerMoethods controllerMoethods = new controllerMoethods();
 
-        router.get("/").handler(this::getHomePage);
+        router.get("/").handler(routingContext -> getHomePage(routingContext, engine));
         router.get("/create_edit_task").handler(routingContext -> controllerMoethods.createEditTask(routingContext));
         router.get("/delete").handler(routingContext -> controllerMoethods.deleteTask(routingContext));
-        router.get("/openCreatEditModal").handler(this::openCreateEditTaskModal);
+        router.get("/openCreatEditModal").handler(routingContext -> openCreateEditTaskModal(routingContext, engine));
         router.get("/markCompleted").handler(routingContext -> controllerMoethods.markTaskCompleted(routingContext));
 
         HttpServer httpServer = vertx.createHttpServer();
@@ -42,16 +56,14 @@ public class verticleController extends AbstractVerticle {
         response.end();
     }
 
-    public void getHomePage(RoutingContext routingContext) {
-        final ThymeleafTemplateEngine engine = ThymeleafTemplateEngine.create(vertx);
-
+    public void getHomePage(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
         HttpServerResponse response = routingContext.response();
         response.putHeader("content-type", "text/html");
 
         routingContext.put("uncheckedTasks", this.taskList.allUnCkecked());
         routingContext.put("checkedTasks", this.taskList.allCkecked());
 
-        engine.render(routingContext.data(), "src/main/resources/HomePage.html").onComplete(res -> {
+        engine.render(routingContext.data(), "HomePage").onComplete(res -> {
             if (res.succeeded()) {
                 System.out.println("success");
                 response.end(res.result());
@@ -62,9 +74,7 @@ public class verticleController extends AbstractVerticle {
         });
     }
 
-    public void openCreateEditTaskModal(RoutingContext routingContext) {
-        final ThymeleafTemplateEngine engine = ThymeleafTemplateEngine.create(vertx);
-
+    public void openCreateEditTaskModal(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
         HttpServerRequest request = routingContext.request();
         HttpServerResponse response = routingContext.response();
 
@@ -76,7 +86,7 @@ public class verticleController extends AbstractVerticle {
             routingContext.put("taskID", taskID);
         }
 
-        engine.render(routingContext.data(), "src/main/resources/modalCreateTask.html").onComplete(res -> {
+        engine.render(routingContext.data(), "modalCreateTask").onComplete(res -> {
             if (res.succeeded()) {
                 response.putHeader("content-type", "text/html");
                 response.end(res.result());
