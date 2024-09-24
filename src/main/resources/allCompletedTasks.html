@@ -1,0 +1,47 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:x-on="http://www.w3.org/1999/xhtml"
+      xmlns:x-transition="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <title>Home Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/htmx.org@2.0.2/dist/htmx.min.js"></script>
+    <link rel="stylesheet" href="/static/css/output.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script defer src=" https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+</head>
+<body>
+    <div th:insert="~{navbarFragment::navbar}"></div>
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <tbody>
+        <tr class="border-b border-solid border-gray-900 text-gray-900 hover:bg-gray-50 " th:each="task : ${tasks}">
+            <td class="px-6 py-4 items-center w-1/12">
+                <input
+                        th:attr="checked=${task.isDone}, hx-get='/markCompleted?taskId='+${task.id}"
+                        id="default-checkbox"
+                        type="checkbox"
+                        value=""
+                        class="border-gray-900 rounded focus:ring-blue-500 focus:ring-2">
+            </td>
+            <td class="px-6 py-4 text-left" th:text="${task.taskName}"></td>
+            <td
+                    class="px-6 py-4 font-medium"
+                    th:attr="hx-get='/delete?taskID='+${task.id}"
+            >
+                <div class="font-medium text-blue-600 hover:underline">Delete</div>
+            </td>
+            <td
+                    class="px-6 py-4 font-medium"
+                    @click="open = !open"
+                    th:attr="hx-get='/openCreatEditModal?taskID='+${task.id}"
+                    hx-target="#modalCreateTask"
+                    hx-swap="innerHTML"
+            >
+                <div class="font-medium text-blue-600 hover:underline">Edit</div>
+            </td>
+            <td class="px-6 py-4"></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -94,4 +94,16 @@ public class controllerMoethods {
         verticleController.redirectHomePage(routingContext);
     }
 
+    public void getAllCompletedTasks(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
+        routingContext.put("tasks", this.taskList.allCkecked());
+
+        engine.render(routingContext.data(), "allCompletedTasks").onComplete(res -> {
+            if (res.succeeded()) {
+                System.out.println("success");
+                routingContext.response().putHeader("content-type", "text/html").end(res.result());
+            } else {
+                res.cause().printStackTrace();
+            }
+        });
+    }
 }
