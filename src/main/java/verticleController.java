@@ -36,6 +36,12 @@ public class verticleController extends AbstractVerticle {
         });
     }
 
+    private static void redirectHomePage(RoutingContext routingContext) {
+        HttpServerResponse response = routingContext.response();
+        response.putHeader("HX-Redirect","/");
+        response.end();
+    }
+
     private void markTaskCompleted(RoutingContext routingContext) {
         System.out.println("mark task completed");
         HttpServerRequest request = routingContext.request();
@@ -47,9 +53,7 @@ public class verticleController extends AbstractVerticle {
 
         this.taskList.toggleCompleteCheckbox(taskId, isCompleted);
 
-        HttpServerResponse response = routingContext.response();
-        response.putHeader("HX-Redirect","/");
-        response.end();
+        redirectHomePage(routingContext);
     }
 
     public void getHomePage(RoutingContext routingContext) {
@@ -112,9 +116,7 @@ public class verticleController extends AbstractVerticle {
             this.taskList.editTask(Integer.parseInt(taskId), taskName);
         }
 
-        HttpServerResponse response = routingContext.response();
-        response.putHeader("HX-Redirect","/");
-        response.end();
+        redirectHomePage(routingContext);
     }
 
     private void deleteTask(RoutingContext routingContext) {
@@ -125,9 +127,7 @@ public class verticleController extends AbstractVerticle {
 
         this.taskList.deleteTask(taskID);
 
-        HttpServerResponse response = routingContext.response();
-        response.putHeader("HX-Redirect","/");
-        response.end();
+        redirectHomePage(routingContext);
     }
 
     public static void main(String[] args) {
