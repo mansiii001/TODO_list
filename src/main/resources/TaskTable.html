@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/static/css/style.css">
     <script defer src=" https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 </head>
-<body>
+<body x-data="{open: false}">
     <div th:insert="~{navbarFragment::navbar}"></div>
         <table class="w-full text-sm text-left rtl:text-right text-gray-500" th:fragment="task_table" id="all_task">
             <tbody>
