@@ -8,8 +8,6 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class verticleController extends AbstractVerticle {
     TaskList taskList = new TaskList();
@@ -20,11 +18,13 @@ public class verticleController extends AbstractVerticle {
 
         router.route("/static/*").handler(StaticHandler.create());
 
+        controllerMoethods controllerMoethods = new controllerMoethods();
+
         router.get("/").handler(this::getHomePage);
-        router.get("/create_edit_task").handler(this::createEditTask);
-        router.get("/delete").handler(this::deleteTask);
+        router.get("/create_edit_task").handler(routingContext -> controllerMoethods.createEditTask(routingContext));
+        router.get("/delete").handler(routingContext -> controllerMoethods.deleteTask(routingContext));
         router.get("/openCreatEditModal").handler(this::openCreateEditTaskModal);
-        router.get("/markCompleted").handler(this::markTaskCompleted);
+        router.get("/markCompleted").handler(routingContext -> controllerMoethods.markTaskCompleted(routingContext));
 
         HttpServer httpServer = vertx.createHttpServer();
         httpServer.requestHandler(router).listen(8080, "localhost", res->{
@@ -36,24 +36,10 @@ public class verticleController extends AbstractVerticle {
         });
     }
 
-    private static void redirectHomePage(RoutingContext routingContext) {
+    static void redirectHomePage(RoutingContext routingContext) {
         HttpServerResponse response = routingContext.response();
         response.putHeader("HX-Redirect","/");
         response.end();
-    }
-
-    private void markTaskCompleted(RoutingContext routingContext) {
-        System.out.println("mark task completed");
-        HttpServerRequest request = routingContext.request();
-        int taskId = Integer.parseInt(request.getParam("taskId"));
-
-        List<Task> allTasks = this.taskList.getAllTasks();
-        Task filteredTask = allTasks.stream().filter(task -> task.id == taskId).collect(Collectors.toList()).get(0);
-        boolean isCompleted = filteredTask.isDone;
-
-        this.taskList.toggleCompleteCheckbox(taskId, isCompleted);
-
-        redirectHomePage(routingContext);
     }
 
     public void getHomePage(RoutingContext routingContext) {
@@ -98,35 +84,5 @@ public class verticleController extends AbstractVerticle {
                 res.cause().printStackTrace();
             }
         });
-    }
-
-    public void createEditTask(RoutingContext routingContext) {
-        HttpServerRequest request = routingContext.request();
-        String taskId = request.getParam("task_id");
-        String taskName = request.getParam("new_task");
-
-        if(taskName.isEmpty()){
-            routingContext.response().setStatusCode(400).end("empty task name");
-            return;
-        }
-
-        if (taskId.isEmpty()) {
-            this.taskList.addTask(taskName);
-        } else {
-            this.taskList.editTask(Integer.parseInt(taskId), taskName);
-        }
-
-        redirectHomePage(routingContext);
-    }
-
-    private void deleteTask(RoutingContext routingContext) {
-        System.out.println("deleting task");
-
-        HttpServerRequest request = routingContext.request();
-        int taskID = Integer.parseInt(request.getParam("taskID"));
-
-        this.taskList.deleteTask(taskID);
-
-        redirectHomePage(routingContext);
     }
 }
