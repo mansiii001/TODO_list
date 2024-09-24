@@ -13,7 +13,6 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 public class verticleController extends AbstractVerticle {
 
     private ThymeleafTemplateEngine engine;
-    TaskList taskList = new TaskList();
 
     public verticleController() {
         this.engine = ThymeleafTemplateEngine.create(vertx);
@@ -34,10 +33,10 @@ public class verticleController extends AbstractVerticle {
 
         controllerMoethods controllerMoethods = new controllerMoethods();
 
-        router.get("/").handler(routingContext -> getHomePage(routingContext, engine));
+        router.get("/").handler(routingContext -> controllerMoethods.getHomePage(routingContext, engine));
         router.get("/create_edit_task").handler(routingContext -> controllerMoethods.createEditTask(routingContext));
         router.get("/delete").handler(routingContext -> controllerMoethods.deleteTask(routingContext));
-        router.get("/openCreatEditModal").handler(routingContext -> openCreateEditTaskModal(routingContext, engine));
+        router.get("/openCreatEditModal").handler(routingContext -> controllerMoethods.openCreateEditTaskModal(routingContext, engine));
         router.get("/markCompleted").handler(routingContext -> controllerMoethods.markTaskCompleted(routingContext));
 
         HttpServer httpServer = vertx.createHttpServer();
@@ -54,45 +53,5 @@ public class verticleController extends AbstractVerticle {
         HttpServerResponse response = routingContext.response();
         response.putHeader("HX-Redirect","/");
         response.end();
-    }
-
-    public void getHomePage(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
-        HttpServerResponse response = routingContext.response();
-        response.putHeader("content-type", "text/html");
-
-        routingContext.put("uncheckedTasks", this.taskList.allUnCkecked());
-        routingContext.put("checkedTasks", this.taskList.allCkecked());
-
-        engine.render(routingContext.data(), "HomePage").onComplete(res -> {
-            if (res.succeeded()) {
-                System.out.println("success");
-                response.end(res.result());
-            } else {
-                System.out.println("failed");
-                res.cause().printStackTrace();
-            }
-        });
-    }
-
-    public void openCreateEditTaskModal(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
-        HttpServerRequest request = routingContext.request();
-        HttpServerResponse response = routingContext.response();
-
-        String taskID = request.getParam("taskID");
-
-        if (taskID != null) {
-            String taskToBeEdit = this.taskList.getTaskToBeEdit(Integer.parseInt(taskID));
-            routingContext.put("task", taskToBeEdit);
-            routingContext.put("taskID", taskID);
-        }
-
-        engine.render(routingContext.data(), "modalCreateTask").onComplete(res -> {
-            if (res.succeeded()) {
-                response.putHeader("content-type", "text/html");
-                response.end(res.result());
-            } else {
-                res.cause().printStackTrace();
-            }
-        });
     }
 }

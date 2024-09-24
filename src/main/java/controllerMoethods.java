@@ -1,5 +1,7 @@
 import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
+import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,6 +9,46 @@ import java.util.stream.Collectors;
 public class controllerMoethods {
 
     TaskList taskList = new TaskList();
+
+    public void getHomePage(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
+        HttpServerResponse response = routingContext.response();
+        response.putHeader("content-type", "text/html");
+
+        routingContext.put("uncheckedTasks", this.taskList.allUnCkecked());
+        routingContext.put("checkedTasks", this.taskList.allCkecked());
+
+        engine.render(routingContext.data(), "HomePage").onComplete(res -> {
+            if (res.succeeded()) {
+                System.out.println("success");
+                response.end(res.result());
+            } else {
+                System.out.println("failed");
+                res.cause().printStackTrace();
+            }
+        });
+    }
+
+    public void openCreateEditTaskModal(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
+        HttpServerRequest request = routingContext.request();
+        HttpServerResponse response = routingContext.response();
+
+        String taskID = request.getParam("taskID");
+
+        if (taskID != null) {
+            String taskToBeEdit = this.taskList.getTaskToBeEdit(Integer.parseInt(taskID));
+            routingContext.put("task", taskToBeEdit);
+            routingContext.put("taskID", taskID);
+        }
+
+        engine.render(routingContext.data(), "modalCreateTask").onComplete(res -> {
+            if (res.succeeded()) {
+                response.putHeader("content-type", "text/html");
+                response.end(res.result());
+            } else {
+                res.cause().printStackTrace();
+            }
+        });
+    }
 
     public void createEditTask(RoutingContext routingContext) {
         HttpServerRequest request = routingContext.request();
