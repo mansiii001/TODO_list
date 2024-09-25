@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="/static/css/style.css">
     <script defer src=" https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 </head>
-<body>
+<body x-data="{open : false}">
+
     <nav class="bg-white" th:fragment="navbar">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <div class="relative flex h-16 items-center justify-between">
@@ -40,13 +41,10 @@
                                 </button>
                             </div>
                             <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
-                                <a href="/">show all tasks</a>
-                            </div>
-                            <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
                                 <a href="/completed_tasks">All Completed Tasks</a>
                             </div>
                             <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
-                                <a href="/uncompleted_tasks">Tasks to be Perform</a>
+                                <a href="/uncompleted_tasks">All UnCompleted Tasks</a>
                             </div>
                         </div>
                     </div>
@@ -54,5 +52,53 @@
             </div>
         </div>
     </nav>
+
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500" th:fragment="task_table" id="all_task">
+        <tbody>
+        <tr class="border-b border-solid border-gray-900 text-gray-900 hover:bg-gray-50 " th:each="task : ${tasks}">
+            <td class="px-6 py-4 items-center w-1/12">
+                <input
+                        th:attr="checked=${task.isDone}, hx-get='/markCompleted?taskId='+${task.id}"
+                        id="default-checkbox"
+                        type="checkbox"
+                        value=""
+                        class="border-gray-900 rounded focus:ring-blue-500 focus:ring-2">
+            </td>
+            <td class="px-6 py-4 text-left" th:text="${task.taskName}"></td>
+            <td
+                    class="px-6 py-4 font-medium"
+                    th:attr="hx-get='/delete?taskID='+${task.id}"
+            >
+                <div class="font-medium text-blue-600 hover:underline">Delete</div>
+            </td>
+            <td
+                    class="px-6 py-4 font-medium"
+                    @click="open = !open"
+                    th:attr="hx-get='/openCreatEditModal?taskID='+${task.id}"
+                    hx-target="#modalCreateTask"
+                    hx-swap="innerHTML"
+            >
+                <div class="font-medium text-blue-600 hover:underline">Edit</div>
+            </td>
+            <td class="px-6 py-4"></td>
+        </tr>
+        <tr class="border-b border-solid border-gray-900 text-gray-900">
+            <td class="px-6 py-4 font-medium">
+                <button
+                        type="button"
+                        @click="open = !open"
+                        hx-get="/openCreatEditModal"
+                        hx-target="#modalCreateTask"
+                        hx-swap="innerHTML"
+                >
+                    + Add New
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <span id="modalCreateTask"></span>
+
 </body>
 </html>

@@ -10,14 +10,30 @@ public class controllerMoethods {
 
     TaskList taskList = new TaskList();
 
-    public void getHomePage(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
+    public void unCompletedTaskPage(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
         HttpServerResponse response = routingContext.response();
         response.putHeader("content-type", "text/html");
 
-        routingContext.put("uncheckedTasks", this.taskList.allUnCkecked());
-        routingContext.put("checkedTasks", this.taskList.allCkecked());
+        routingContext.put("tasks", this.taskList.allUnCkecked());
 
-        engine.render(routingContext.data(), "HomePage").onComplete(res -> {
+        engine.render(routingContext.data(), "unCompletedTasks").onComplete(res -> {
+            if (res.succeeded()) {
+                System.out.println("success");
+                response.end(res.result());
+            } else {
+                System.out.println("failed");
+                res.cause().printStackTrace();
+            }
+        });
+    }
+
+    public void getAllCompletedTasks(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
+        HttpServerResponse response = routingContext.response();
+        response.putHeader("content-type", "text/html");
+
+        routingContext.put("tasks", this.taskList.allCkecked());
+
+        engine.render(routingContext.data(), "completedTasks").onComplete(res -> {
             if (res.succeeded()) {
                 System.out.println("success");
                 response.end(res.result());
@@ -94,26 +110,4 @@ public class controllerMoethods {
         verticleController.redirectHomePage(routingContext);
     }
 
-    public void getAllCompletedTasks(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
-        routingContext.put("tasks", this.taskList.allCkecked());
-        routingContext.put("canAddNew", false);
-        renderTaskTable(routingContext, engine);
-    }
-
-    public void getAllUnCompletedTasks(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
-        routingContext.put("tasks", this.taskList.allUnCkecked());
-        routingContext.put("canAddNew", true);
-        renderTaskTable(routingContext, engine);
-    }
-
-    private static void renderTaskTable(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
-        engine.render(routingContext.data(), "TaskTable").onComplete(res -> {
-            if (res.succeeded()) {
-                System.out.println("success");
-                routingContext.response().putHeader("content-type", "text/html").end(res.result());
-            } else {
-                res.cause().printStackTrace();
-            }
-        });
-    }
 }
