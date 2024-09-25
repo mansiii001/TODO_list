@@ -20,7 +20,7 @@ public class controllerMoethods {
 
         routingContext.put("tasks", this.taskList.allUnCkecked());
 
-        engine.render(routingContext.data(), "unCompletedTasks").onComplete(res -> {
+        engine.render(routingContext.data(), "unCompletedTasks", res -> {
             if (res.succeeded()) {
                 System.out.println("success");
                 response.end(res.result());
@@ -37,7 +37,7 @@ public class controllerMoethods {
 
         routingContext.put("tasks", this.taskList.allCkecked());
 
-        engine.render(routingContext.data(), "completedTasks").onComplete(res -> {
+        engine.render(routingContext.data(), "completedTasks::task_table", res -> {
             if (res.succeeded()) {
                 System.out.println("success");
                 response.end(res.result());
@@ -60,9 +60,9 @@ public class controllerMoethods {
             routingContext.put("taskID", taskID);
         }
 
-        engine.render(routingContext.data(), "components/modalCreateTask").onComplete(res -> {
+        engine.render(routingContext.data(), "components/modalCreateTask", res -> {
             if (res.succeeded()) {
-                response.putHeader("content-type", "text/html");
+                System.out.println("success");
                 response.end(res.result());
             } else {
                 res.cause().printStackTrace();

@@ -7,6 +7,7 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
+import org.example.CustomThymeleafTemplateEngineImpl;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 
@@ -15,7 +16,7 @@ public class verticleController extends AbstractVerticle {
     private ThymeleafTemplateEngine engine;
 
     public verticleController() {
-        this.engine = ThymeleafTemplateEngine.create(vertx);
+        this.engine = new CustomThymeleafTemplateEngineImpl(vertx);
         configureThymeleafEngine(engine);
     }
 

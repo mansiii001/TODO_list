@@ -41,7 +41,15 @@
                                 </button>
                             </div>
                             <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
-                                <a href="/completed_tasks">All Completed Tasks</a>
+                                <button
+                                    type="button"
+                                    hx-trigger="click"
+                                    hx-get="/completed_tasks"
+                                    hx-target="#taskTable"
+                                    hx-swap="innerHTML"
+                                >
+                                    All Completed Tasks
+                                </button>
                             </div>
                             <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
                                 <a href="/uncompleted_tasks">All UnCompleted Tasks</a>
@@ -53,50 +61,52 @@
         </div>
     </nav>
 
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500" th:fragment="task_table" id="all_task">
-        <tbody>
-        <tr class="border-b border-solid border-gray-900 text-gray-900 hover:bg-gray-50 " th:each="task : ${tasks}">
-            <td class="px-6 py-4 items-center w-1/12">
-                <input
-                        th:attr="checked=${task.isDone}, hx-get='/markCompleted?taskId='+${task.id}"
-                        id="default-checkbox"
-                        type="checkbox"
-                        value=""
-                        class="border-gray-900 rounded focus:ring-blue-500 focus:ring-2">
-            </td>
-            <td class="px-6 py-4 text-left" th:text="${task.taskName}"></td>
-            <td
-                    class="px-6 py-4 font-medium"
-                    th:attr="hx-get='/delete?taskID='+${task.id}"
-            >
-                <div class="font-medium text-blue-600 hover:underline">Delete</div>
-            </td>
-            <td
-                    class="px-6 py-4 font-medium"
-                    @click="open = !open"
-                    th:attr="hx-get='/openCreatEditModal?taskID='+${task.id}"
-                    hx-target="#modalCreateTask"
-                    hx-swap="innerHTML"
-            >
-                <div class="font-medium text-blue-600 hover:underline">Edit</div>
-            </td>
-            <td class="px-6 py-4"></td>
-        </tr>
-        <tr class="border-b border-solid border-gray-900 text-gray-900">
-            <td class="px-6 py-4 font-medium">
-                <button
-                        type="button"
+    <div id="taskTable">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500" id="all_task">
+            <tbody>
+            <tr class="border-b border-solid border-gray-900 text-gray-900 hover:bg-gray-50 " th:each="task : ${tasks}">
+                <td class="px-6 py-4 items-center w-1/12">
+                    <input
+                            th:attr="checked=${task.isDone}, hx-get='/markCompleted?taskId='+${task.id}"
+                            id="default-checkbox"
+                            type="checkbox"
+                            value=""
+                            class="border-gray-900 rounded focus:ring-blue-500 focus:ring-2">
+                </td>
+                <td class="px-6 py-4 text-left" th:text="${task.taskName}"></td>
+                <td
+                        class="px-6 py-4 font-medium"
+                        th:attr="hx-get='/delete?taskID='+${task.id}"
+                >
+                    <div class="font-medium text-blue-600 hover:underline">Delete</div>
+                </td>
+                <td
+                        class="px-6 py-4 font-medium"
                         @click="open = !open"
-                        hx-get="/openCreatEditModal"
+                        th:attr="hx-get='/openCreatEditModal?taskID='+${task.id}"
                         hx-target="#modalCreateTask"
                         hx-swap="innerHTML"
                 >
-                    + Add New
-                </button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                    <div class="font-medium text-blue-600 hover:underline">Edit</div>
+                </td>
+                <td class="px-6 py-4"></td>
+            </tr>
+            <tr class="border-b border-solid border-gray-900 text-gray-900">
+                <td class="px-6 py-4 font-medium">
+                    <button
+                            type="button"
+                            @click="open = !open"
+                            hx-get="/openCreatEditModal"
+                            hx-target="#modalCreateTask"
+                            hx-swap="innerHTML"
+                    >
+                        + Add New
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
     <span id="modalCreateTask"></span>
 
