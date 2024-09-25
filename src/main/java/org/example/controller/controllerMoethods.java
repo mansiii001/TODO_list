@@ -70,7 +70,7 @@ public class controllerMoethods {
         });
     }
 
-    public void createEditTask(RoutingContext routingContext) {
+    public void saveTask(RoutingContext routingContext) {
         HttpServerRequest request = routingContext.request();
         String taskId = request.getParam("task_id");
         String taskName = request.getParam("new_task");
