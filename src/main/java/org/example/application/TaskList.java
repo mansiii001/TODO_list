@@ -1,3 +1,7 @@
+package org.example.application;
+
+import org.example.database.MySQLConnect;
+
 import java.util.*;
 import java.util.stream.Collectors;
 

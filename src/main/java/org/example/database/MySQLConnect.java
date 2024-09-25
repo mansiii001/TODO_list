@@ -1,3 +1,7 @@
+package org.example.database;
+
+import org.example.application.Task;
+
 import java.sql.*;
 import java.util.ArrayList;
 

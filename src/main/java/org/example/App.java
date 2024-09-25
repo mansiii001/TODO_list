@@ -1,9 +1,13 @@
 package org.example;
 
-public class App 
+import io.vertx.core.Vertx;
+import org.example.controller.verticleController;
+
+public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        Vertx vertx = Vertx.vertx();
+        vertx.deployVerticle(new verticleController());
     }
 }
