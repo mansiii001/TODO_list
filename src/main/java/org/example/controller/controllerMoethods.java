@@ -16,16 +16,16 @@ public class controllerMoethods {
 
     public void unCompletedTaskPage(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
         HttpServerResponse response = routingContext.response();
+        HttpServerRequest request = routingContext.request();
         response.putHeader("content-type", "text/html");
 
         routingContext.put("tasks", this.taskList.allUnCkecked());
 
-        HttpServerRequest request = routingContext.request();
-        String requestParam = request.getHeader("HX-Request");
+        String isHTMXCall = request.getHeader("HX-Request");
 
         String templateFileName = "unCompletedTasks";
 
-        if(requestParam != null) {
+        if(isHTMXCall != null) {
             templateFileName = "unCompletedTasks::unCompletedTask";
         }
 
@@ -42,18 +42,17 @@ public class controllerMoethods {
 
     public void getAllCompletedTasks(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
         HttpServerResponse response = routingContext.response();
+        HttpServerRequest request = routingContext.request();
+
         response.putHeader("content-type", "text/html");
 
         routingContext.put("tasks", this.taskList.allCkecked());
 
-        HttpServerRequest request = routingContext.request();
-        String requestParam = request.getHeader("HX-Request");
-
-        System.out.println("---- requestParam : "+requestParam);
+        String isHTMXCall = request.getHeader("HX-Request");
 
         String templateFileName = "completedTasks";
 
-        if(requestParam != null) {
+        if(isHTMXCall != null) {
             templateFileName = "completedTasks::completedTask";
         }
 
