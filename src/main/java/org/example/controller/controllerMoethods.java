@@ -20,7 +20,16 @@ public class controllerMoethods {
 
         routingContext.put("tasks", this.taskList.allUnCkecked());
 
-        engine.render(routingContext.data(), "unCompletedTasks", res -> {
+        HttpServerRequest request = routingContext.request();
+        String requestParam = request.getHeader("HX-Request");
+
+        String templateFileName = "unCompletedTasks";
+
+        if(requestParam != null) {
+            templateFileName = "unCompletedTasks::unCompletedTask";
+        }
+
+        engine.render(routingContext.data(), templateFileName, res -> {
             if (res.succeeded()) {
                 System.out.println("success");
                 response.end(res.result());

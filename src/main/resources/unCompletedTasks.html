@@ -9,7 +9,7 @@
     <div th:insert="fragments/NavigationBar::navbar"></div>
 
     <div id="taskTable">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500" id="all_task">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500" th:fragment="unCompletedTask" id="all_task">
             <tbody>
             <tr class="border-b border-solid border-gray-900 text-gray-900 hover:bg-gray-50 " th:each="task : ${tasks}">
                 <td class="px-6 py-4 items-center w-1/12">

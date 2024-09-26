@@ -39,7 +39,12 @@
                             </button>
                         </div>
                         <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
-                            <a href="/uncompleted_tasks">All UnCompleted Tasks</a>
+                            <a type="button"
+                               hx-trigger="click"
+                               hx-get="/uncompleted_tasks"
+                               hx-target="#taskTable"
+                               hx-swap="innerHTML"
+                               hx-replace-url="/uncompleted_tasks">All UnCompleted Tasks</a>
                         </div>
                     </div>
                 </div>
