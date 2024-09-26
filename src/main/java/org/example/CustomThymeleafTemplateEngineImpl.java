@@ -95,7 +95,6 @@ public class CustomThymeleafTemplateEngineImpl implements ThymeleafTemplateEngin
 
     }
 
-    @Override
     public boolean isCachingEnabled() {
         return false;
     }
