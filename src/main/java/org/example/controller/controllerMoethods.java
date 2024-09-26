@@ -37,7 +37,18 @@ public class controllerMoethods {
 
         routingContext.put("tasks", this.taskList.allCkecked());
 
-        engine.render(routingContext.data(), "completedTasks::task_table", res -> {
+        HttpServerRequest request = routingContext.request();
+        String requestParam = request.getHeader("HX-Request");
+
+        System.out.println("---- requestParam : "+requestParam);
+
+        String templateFileName = "completedTasks";
+
+        if(requestParam != null) {
+            templateFileName = "completedTasks::completedTask";
+        }
+
+        engine.render(routingContext.data(), templateFileName, res -> {
             if (res.succeeded()) {
                 System.out.println("success");
                 response.end(res.result());

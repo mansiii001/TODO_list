@@ -1,4 +1,4 @@
-<nav class="bg-white" th:fragment="navbar">
+<nav class="bg-white" th:fragment="navbar" xmlns:x-transition="http://www.w3.org/1999/xhtml">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <div class="relative flex h-16 items-center justify-between">
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -33,6 +33,7 @@
                                     hx-get="/completed_tasks"
                                     hx-target="#taskTable"
                                     hx-swap="innerHTML"
+                                    hx-replace-url="/completed_tasks"
                             >
                                 All Completed Tasks
                             </button>
