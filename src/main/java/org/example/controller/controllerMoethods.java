@@ -105,7 +105,7 @@ public class controllerMoethods {
             this.taskList.editTask(Integer.parseInt(taskId), taskName);
         }
 
-        verticleController.redirectHomePage(routingContext);
+        VerticleController.redirectHomePage(routingContext);
     }
 
     public void deleteTask(RoutingContext routingContext) {
@@ -116,7 +116,7 @@ public class controllerMoethods {
 
         this.taskList.deleteTask(taskID);
 
-        verticleController.redirectHomePage(routingContext);
+        VerticleController.redirectHomePage(routingContext);
     }
 
     public void markTaskCompleted(RoutingContext routingContext) {
@@ -130,7 +130,7 @@ public class controllerMoethods {
 
         this.taskList.toggleCompleteCheckbox(taskId, isCompleted);
 
-        verticleController.redirectHomePage(routingContext);
+        VerticleController.redirectHomePage(routingContext);
     }
 
 }

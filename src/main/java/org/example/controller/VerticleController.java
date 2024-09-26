@@ -11,11 +11,11 @@ import org.example.CustomThymeleafTemplateEngineImpl;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 
-public class verticleController extends AbstractVerticle {
+public class VerticleController extends AbstractVerticle {
 
     private ThymeleafTemplateEngine engine;
 
-    public verticleController() {
+    public VerticleController() {
         this.engine = new CustomThymeleafTemplateEngineImpl(vertx);
         configureThymeleafEngine(engine);
     }
