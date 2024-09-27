@@ -10,8 +10,8 @@
 
     <div id="taskTable">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500" th:fragment="unCompletedTask" id="all_task">
-            <tbody>
-            <tr class="border-b border-solid border-gray-900 text-gray-900 hover:bg-gray-50 " th:each="task : ${tasks}">
+            <tbody hx-target="closest tr" hx-swap="outerHTML">
+            <tr class="border-b border-solid border-gray-900 text-gray-900 hover:bg-gray-50"  th:each="task : ${tasks}" hx-swap-oob="true">
                 <td class="px-6 py-4 items-center w-1/12">
                     <input
                             th:attr="checked=${task.isDone}, hx-get='/markCompleted?taskId='+${task.id}"
@@ -23,7 +23,7 @@
                 <td class="px-6 py-4 text-left" th:text="${task.taskName}"></td>
                 <td
                         class="px-6 py-4 font-medium"
-                        th:attr="hx-get='/delete?taskID='+${task.id}"
+                        th:attr="hx-delete='/delete?taskID='+${task.id}"
                 >
                     <div class="font-medium text-blue-600 hover:underline">Delete</div>
                 </td>

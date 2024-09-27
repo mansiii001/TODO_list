@@ -93,7 +93,6 @@ public class TaskController {
 
         this.taskList.deleteTask(taskID);
 
-        response.putHeader("HX-Refresh", Boolean.TRUE.toString());
         response.end();
     }
 
