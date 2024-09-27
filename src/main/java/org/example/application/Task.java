@@ -10,4 +10,8 @@ public class Task {
         this.taskName = taskName;
         this.isDone = isDone;
     }
+
+    public void editTask(String taskName) {
+        this.taskName = taskName;
+    }
 }

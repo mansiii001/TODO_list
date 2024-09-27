@@ -42,9 +42,7 @@ public class TaskList {
         if(taskName.isEmpty()){
             throw new Exception("Task name cannot be empty");
         }
-
-        MySQLConnect mySQLConnect = new MySQLConnect();
-        mySQLConnect.editTask(taskID, taskName);
+        NewTaskList.editTask(taskID, taskName);
     }
 
     public void toggleCompleteCheckbox(Integer taskId) {

@@ -37,4 +37,9 @@ public class NewTaskList {
     public static void removeTask(int taskID){
         allTasks.remove(findTask(taskID));
     }
+
+    public static void editTask(int taskID, String taskName){
+        Task task = findTask(taskID);
+        task.editTask(taskName);
+    }
 }
