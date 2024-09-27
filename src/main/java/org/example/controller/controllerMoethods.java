@@ -100,11 +100,13 @@ public class controllerMoethods {
         System.out.println("deleting task");
 
         HttpServerRequest request = routingContext.request();
+        HttpServerResponse response = routingContext.response();
         int taskID = Integer.parseInt(request.getParam("taskID"));
 
         this.taskList.deleteTask(taskID);
 
-        VerticleController.redirectHomePage(routingContext);
+        response.putHeader("HX-Refresh", Boolean.TRUE.toString());
+        response.end();
     }
 
     public void markTaskCompleted(RoutingContext routingContext) {
