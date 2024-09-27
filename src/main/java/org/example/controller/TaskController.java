@@ -116,11 +116,8 @@ public class TaskController {
         int taskId = Integer.parseInt(request.getParam("task_id"));
         String taskName = request.getParam("new_task");
 
-        try{
-            this.taskList.editTask(taskId, taskName);
-        } catch (Exception e) {
-            response.setStatusCode(400).end(e.getMessage());
-        }
+        Integer statusCode = this.taskList.editTask(taskId, taskName);
+        response.setStatusCode(statusCode);
 
         response.putHeader("HX-Refresh", Boolean.TRUE.toString());
         response.end();

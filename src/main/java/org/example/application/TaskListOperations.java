@@ -37,11 +37,12 @@ public class TaskListOperations {
         TaskList.removeTask(taskID);
     }
 
-    public void editTask(Integer taskID, String taskName) throws Exception {
+    public Integer editTask(Integer taskID, String taskName){
         if(taskName.isEmpty()){
-            throw new Exception("Task name cannot be empty");
+            return 400;
         }
         TaskList.editTask(taskID, taskName);
+        return 200;
     }
 
     public void toggleCompleteCheckbox(Integer taskId) {
