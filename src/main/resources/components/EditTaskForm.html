@@ -1,14 +1,14 @@
-<form ID="create_form" hx-get="/save_task" hx-trigger="submit" x-on:submit="openSaveTaskModal = false"
-      hx-target="#all_task" hx-swap="innerHTML" x-show="openSaveTaskModal" xmlns:x-on="http://www.w3.org/1999/xhtml">
+<form ID="editForm" hx-get="/edit-task" hx-trigger="submit" x-on:submit="openEditTaskModal = false"
+      hx-target="#all_task" hx-swap="innerHTML" x-show="openEditTaskModal" xmlns:x-on="http://www.w3.org/1999/xhtml">
     <div
             class="fixed top-0 left-0 z-10 w-full h-full overflow-x-hidden overflow-y-auto outline-0 backdrop-blur"
-            x-show="openSaveTaskModal"
+            x-show="openEditTaskModal"
             aria-labelledby="modal-title"
             x-ref="dialog"
             aria-modal="true"
             xmlns:x-transition="http://www.w3.org/1999/xhtml">
         <div
-                x-show="openSaveTaskModal"
+                x-show="openEditTaskModal"
                 class="relative flex justify-center w-4/5 mt-24 ml-36"
                 x-transition:enter="ease-out duration-300"
                 x-transition:enter-start="opacity-0"
@@ -21,7 +21,7 @@
             <div class="relative flex flex-col w-4/5 h-full pointer-events-auto bg-white bg-clip-padding border-solid border-gray-500 rounded-md outline">
 
                 <div class=" flex shrink-0 items-center justify-between p-4 border-b border-solid border-gray-500 rounded-t">
-                    <h5 class="font-bold">Add New Task</h5>
+                    <h5 class="font-bold">Edit Task</h5>
                 </div>
 
                 <div class="relative flex-auto mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
@@ -43,7 +43,7 @@
                     <button
                             type="reset"
                             id="reset"
-                            @click="openSaveTaskModal = false"
+                            @click="openEditTaskModal = false"
                             class="rounded-md bg-gray-50 px-3 py-2 ml-1.5 text-sm font-medium border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-gray-50"
                     >
                         Cancel

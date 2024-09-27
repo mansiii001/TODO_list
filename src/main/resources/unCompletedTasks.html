@@ -4,7 +4,7 @@
 <head th:insert="fragments/Header::header(~{::title})">
     <title>UnCompleted Tasks</title>
 </head>
-<body x-data="{open : false}">
+<body x-data="{openSaveTaskModal : false, openEditTaskModal : false}">
 
     <div th:insert="fragments/NavigationBar::navbar"></div>
 
@@ -29,7 +29,7 @@
                 </td>
                 <td
                         class="px-6 py-4 font-medium"
-                        @click="open = !open"
+                        @click="openEditTaskModal = !openEditTaskModal"
                         th:attr="hx-get='/openCreatEditModal?taskID='+${task.id}"
                         hx-target="#modalCreateTask"
                         hx-swap="innerHTML"
@@ -42,7 +42,7 @@
                 <td class="px-6 py-4 font-medium">
                     <button
                             type="button"
-                            @click="open = !open"
+                            @click="openSaveTaskModal = !openSaveTaskModal"
                             hx-get="/openCreatEditModal"
                             hx-target="#modalCreateTask"
                             hx-swap="innerHTML"

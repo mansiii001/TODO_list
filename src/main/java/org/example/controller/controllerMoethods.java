@@ -73,13 +73,17 @@ public class controllerMoethods {
 
         String taskID = request.getParam("taskID");
 
+        String templateFileName = "components/modalCreateTask";
+
         if (taskID != null) {
             String taskToBeEdit = this.taskList.getTaskToBeEdit(Integer.parseInt(taskID));
             routingContext.put("task", taskToBeEdit);
             routingContext.put("taskID", taskID);
+            templateFileName = "components/EditTaskForm";
+
         }
 
-        engine.render(routingContext.data(), "components/modalCreateTask", res -> {
+        engine.render(routingContext.data(), templateFileName, res -> {
             if (res.succeeded()) {
                 System.out.println("success");
                 response.end(res.result());
@@ -133,4 +137,20 @@ public class controllerMoethods {
         VerticleController.redirectHomePage(routingContext);
     }
 
+    public void editTask(RoutingContext routingContext) {
+        HttpServerRequest request = routingContext.request();
+        int taskId = Integer.parseInt(request.getParam("task_id"));
+        String taskName = request.getParam("new_task");
+
+        if(taskName.isEmpty()){
+            routingContext.response().setStatusCode(400).end("empty task name");
+            return;
+        }
+
+        this.taskList.editTask(taskId, taskName);
+
+        HttpServerResponse response = routingContext.response();
+        response.putHeader("HX-Refresh", Boolean.TRUE.toString());
+        response.end();
+    }
 }
