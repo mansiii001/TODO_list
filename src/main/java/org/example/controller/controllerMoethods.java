@@ -80,20 +80,16 @@ public class controllerMoethods {
         });
     }
 
-    public void saveTask(RoutingContext routingContext) {
+    public void addNewTask(RoutingContext routingContext) {
         HttpServerRequest request = routingContext.request();
-        String taskId = request.getParam("task_id");
+        HttpServerResponse response = routingContext.response();
+
         String taskName = request.getParam("new_task");
 
-        if(taskName.isEmpty()){
-            routingContext.response().setStatusCode(400).end("empty task name");
-            return;
-        }
-
-        if (taskId.isEmpty()) {
+        try {
             this.taskList.addTask(taskName);
-        } else {
-            this.taskList.editTask(Integer.parseInt(taskId), taskName);
+        } catch (Exception e) {
+            response.setStatusCode(400).end(e.getMessage());
         }
 
         VerticleController.redirectHomePage(routingContext);
@@ -125,18 +121,18 @@ public class controllerMoethods {
     }
 
     public void editTask(RoutingContext routingContext) {
+        HttpServerResponse response = routingContext.response();
         HttpServerRequest request = routingContext.request();
+
         int taskId = Integer.parseInt(request.getParam("task_id"));
         String taskName = request.getParam("new_task");
 
-        if(taskName.isEmpty()){
-            routingContext.response().setStatusCode(400).end("empty task name");
-            return;
+        try{
+            this.taskList.editTask(taskId, taskName);
+        } catch (Exception e) {
+            response.setStatusCode(400).end(e.getMessage());
         }
 
-        this.taskList.editTask(taskId, taskName);
-
-        HttpServerResponse response = routingContext.response();
         response.putHeader("HX-Refresh", Boolean.TRUE.toString());
         response.end();
     }

@@ -7,13 +7,15 @@ import java.util.stream.Collectors;
 
 public class TaskList {
 
-    public void addTask(String task) {
-        try {
-            MySQLConnect mySQLConnect = new MySQLConnect();
-            mySQLConnect.createNewTask(task);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void addTask(String taskName) throws Exception {
+
+        if(taskName.isEmpty()){
+            throw new Exception("taskName can not be empty");
         }
+
+        MySQLConnect mySQLConnect = new MySQLConnect();
+        mySQLConnect.createNewTask(taskName);
+
     }
 
     public List<Task> getAllTasks() {
@@ -79,13 +81,13 @@ public class TaskList {
         }
     }
 
-    public void editTask(Integer taskID, String taskName) {
-        try{
-            MySQLConnect mySQLConnect = new MySQLConnect();
-            mySQLConnect.editTask(taskID, taskName);
-        } catch (Exception e){
-            e.printStackTrace();
+    public void editTask(Integer taskID, String taskName) throws Exception {
+        if(taskName.isEmpty()){
+            throw new Exception("Task name cannot be empty");
         }
+
+        MySQLConnect mySQLConnect = new MySQLConnect();
+        mySQLConnect.editTask(taskID, taskName);
     }
 
     public void toggleCompleteCheckbox(Integer taskId, Boolean isCompleted) {

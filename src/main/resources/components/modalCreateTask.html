@@ -1,4 +1,4 @@
-<form ID="create_form" hx-get="/save-task" hx-trigger="submit" x-on:submit="openSaveTaskModal = false"
+<form ID="create_form" hx-get="/add-task" hx-trigger="submit" x-on:submit="openSaveTaskModal = false"
       hx-target="#all_task" hx-swap="innerHTML" x-show="openSaveTaskModal" xmlns:x-on="http://www.w3.org/1999/xhtml">
     <div
             class="fixed top-0 left-0 z-10 w-full h-full overflow-x-hidden overflow-y-auto outline-0 backdrop-blur"
@@ -27,7 +27,6 @@
                 <div class="relative flex-auto mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <label>New Task :
                         <input class="rounded-md p-3 m-3 bg-gray-100 w-10/12" type="text" id="new_task" name="new_task" th:value="${task}" required/>
-                        <input type="hidden" id="task_id" name="task_id" th:value="${taskID}">
                     </label>
                 </div>
 
