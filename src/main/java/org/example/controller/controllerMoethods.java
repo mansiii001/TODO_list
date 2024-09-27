@@ -4,11 +4,11 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
-import org.example.application.TaskList;
+import org.example.application.TaskListOperations;
 
 public class controllerMoethods {
 
-    TaskList taskList = new TaskList();
+    TaskListOperations taskList = new TaskListOperations();
 
     public void unCompletedTaskPage(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
         HttpServerResponse response = routingContext.response();
