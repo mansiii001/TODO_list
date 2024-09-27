@@ -36,7 +36,7 @@ public class VerticleController extends AbstractVerticle {
         router.get("/completed_tasks").handler(routingContext -> taskController.getAllCompletedTasks(routingContext, engine));
         router.get("/uncompleted_tasks").handler(routingContext -> taskController.unCompletedTaskPage(routingContext, engine));
 
-        router.get("/add-task").handler(routingContext -> taskController.addNewTask(routingContext));
+        router.get("/add-task").handler(routingContext -> taskController.addNewTask(routingContext, engine));
         router.get("/edit-task").handler(routingContext -> taskController.editTask(routingContext));
         router.get("/delete").handler(routingContext -> taskController.deleteTask(routingContext));
         router.get("/openCreateTaskModal").handler(routingContext -> taskController.openCreateTaskModal(routingContext, engine));

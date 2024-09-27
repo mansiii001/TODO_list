@@ -76,7 +76,7 @@ public class TaskController {
         });
     }
 
-    public void addNewTask(RoutingContext routingContext) {
+    public void addNewTask(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
         HttpServerRequest request = routingContext.request();
         HttpServerResponse response = routingContext.response();
 
@@ -88,8 +88,20 @@ public class TaskController {
             response.setStatusCode(400).end(e.getMessage());
         }
 
-        response.putHeader("HX-Refresh", Boolean.TRUE.toString());
-        response.end();
+        String currentURL = request.getHeader("HX-Current-Url");
+
+        if (currentURL.contains("/completed_tasks")) {
+            engine.render(routingContext.data(), "fragments/SuccessAlertFragment::successAlert", res -> {
+                if (res.succeeded()) {
+                    System.out.println("success----response : "+res.result());
+                    response.end(res.result());
+                } else {
+                    System.out.println("failed");
+                }
+            });
+        } else {
+            response.putHeader("HX-Refresh", Boolean.TRUE.toString()).end();
+        }
     }
 
     public void deleteTask(RoutingContext routingContext) {

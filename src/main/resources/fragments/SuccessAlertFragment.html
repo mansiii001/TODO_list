@@ -1,0 +1,18 @@
+<div
+        x-data="{alert: true}"
+        x-show="alert"
+        x-init="setTimeout(() => alert = false, 1500)"
+        class="p-4 m-4 text-sm text-green-50 rounded-lg bg-green-800 w-fit absolute bottom-0 left-0"
+        role="alert"
+        x-transition:enter="ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        th:fragment="successAlert"
+        xmlns:x-transition="http://www.w3.org/1999/xhtml">
+            <span class="font-medium">
+                Task Saved Successfully!
+            </span>
+</div>
