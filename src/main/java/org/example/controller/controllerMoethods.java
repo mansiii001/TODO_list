@@ -92,7 +92,8 @@ public class controllerMoethods {
             response.setStatusCode(400).end(e.getMessage());
         }
 
-        VerticleController.redirectHomePage(routingContext);
+        response.putHeader("HX-Refresh", Boolean.TRUE.toString());
+        response.end();
     }
 
     public void deleteTask(RoutingContext routingContext) {
