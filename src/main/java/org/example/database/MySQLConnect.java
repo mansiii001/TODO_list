@@ -14,20 +14,6 @@ public class MySQLConnect {
         return DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_list", "root", "12345678");
     }
 
-    public void deleteTask(int taskID) throws Exception {
-        try {
-            connect = getConnection();
-            PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM todos where id = (?)");
-            preparedStatement.setInt(1, taskID);
-            preparedStatement.executeUpdate();
-
-        } catch (Exception e){
-            throw new Exception(e.getMessage());
-        } finally {
-            close();
-        }
-    }
-
     public void editTask(Integer taskID, String taskName) {
         try {
             connect = getConnection();

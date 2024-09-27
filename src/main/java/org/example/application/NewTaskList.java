@@ -33,4 +33,8 @@ public class NewTaskList {
         Task task = new Task(allTasks.size() + 1, taskName, false);
         allTasks.add(task);
     }
+
+    public static void removeTask(int taskID){
+        allTasks.remove(findTask(taskID));
+    }
 }

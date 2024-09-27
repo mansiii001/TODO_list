@@ -35,12 +35,7 @@ public class TaskList {
     }
 
     public void deleteTask(int taskID) {
-        try{
-            MySQLConnect mySQLConnect = new MySQLConnect();
-            mySQLConnect.deleteTask(taskID);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        NewTaskList.removeTask(taskID);
     }
 
     public void editTask(Integer taskID, String taskName) throws Exception {
