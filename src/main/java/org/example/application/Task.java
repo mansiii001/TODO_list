@@ -11,7 +11,11 @@ public class Task {
         this.isDone = isDone;
     }
 
-    public void editTask(String taskName) {
+    public void setTaskName(String taskName) {
         this.taskName = taskName;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
     }
 }

@@ -1,7 +1,5 @@
 package org.example.application;
 
-import org.example.database.MySQLConnect;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -46,16 +44,9 @@ public class TaskList {
     }
 
     public void toggleCompleteCheckbox(Integer taskId) {
-
         Task task = findTask(taskId);
-        boolean isCompleted = task.isDone;
-
-        try {
-            MySQLConnect mySQLConnect = new MySQLConnect();
-            mySQLConnect.markCompleted(taskId, !isCompleted);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        boolean checkBoxMark = task.isDone;
+        NewTaskList.toggleTaskCompleteMark(taskId, !checkBoxMark);
     }
 
     public Task findTask(Integer taskID) {

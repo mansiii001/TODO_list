@@ -40,6 +40,11 @@ public class NewTaskList {
 
     public static void editTask(int taskID, String taskName){
         Task task = findTask(taskID);
-        task.editTask(taskName);
+        task.setTaskName(taskName);
+    }
+
+    public static void toggleTaskCompleteMark(int taskID, Boolean checkBoxMark){
+        Task task = findTask(taskID);
+        task.setDone(checkBoxMark);
     }
 }
