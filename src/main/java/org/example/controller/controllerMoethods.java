@@ -114,11 +114,7 @@ public class controllerMoethods {
         HttpServerRequest request = routingContext.request();
         int taskId = Integer.parseInt(request.getParam("taskId"));
 
-        List<Task> allTasks = this.taskList.getAllTasks();
-        Task filteredTask = allTasks.stream().filter(task -> task.id == taskId).collect(Collectors.toList()).get(0);
-        boolean isCompleted = filteredTask.isDone;
-
-        this.taskList.toggleCompleteCheckbox(taskId, isCompleted);
+        this.taskList.toggleCompleteCheckbox(taskId);
 
         VerticleController.redirectHomePage(routingContext);
     }

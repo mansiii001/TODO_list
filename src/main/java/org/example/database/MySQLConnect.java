@@ -104,7 +104,7 @@ public class MySQLConnect {
         try{
             connect = getConnection();
             PreparedStatement prepareStatement = connect.prepareStatement("UPDATE todos set isCompleted = (?) where id = (?)");
-            prepareStatement.setBoolean(1, !isCompleted );
+            prepareStatement.setBoolean(1, isCompleted );
             prepareStatement.setInt(2, taskID);
             prepareStatement.executeUpdate();
 

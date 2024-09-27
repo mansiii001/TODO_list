@@ -90,10 +90,15 @@ public class TaskList {
         mySQLConnect.editTask(taskID, taskName);
     }
 
-    public void toggleCompleteCheckbox(Integer taskId, Boolean isCompleted) {
+    public void toggleCompleteCheckbox(Integer taskId) {
+
+        List<Task> allTasks = getAllTasks();
+        Task filteredTask = allTasks.stream().filter(task -> task.id == taskId).collect(Collectors.toList()).get(0);
+        boolean isCompleted = filteredTask.isDone;
+
         try {
             MySQLConnect mySQLConnect = new MySQLConnect();
-            mySQLConnect.markCompleted(taskId, isCompleted);
+            mySQLConnect.markCompleted(taskId, !isCompleted);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
