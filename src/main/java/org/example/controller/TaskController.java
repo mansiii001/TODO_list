@@ -17,20 +17,12 @@ public class TaskController {
 
         routingContext.put("tasks", this.taskList.unCheckedTasks());
 
-        String isHTMXCall = request.getHeader("HX-Request");
-
-        String templateFileName = "unCompletedTasks";
-
-        if(isHTMXCall != null) {
-            templateFileName = "unCompletedTasks::unCompletedTask";
-        }
+        String templateFileName =(request.getHeader("HX-Request") != null) ? "unCompletedTasks::unCompletedTask" : "unCompletedTasks";
 
         engine.render(routingContext.data(), templateFileName, res -> {
             if (res.succeeded()) {
-                System.out.println("success");
                 response.end(res.result());
             } else {
-                System.out.println("failed");
                 res.cause().printStackTrace();
             }
         });
