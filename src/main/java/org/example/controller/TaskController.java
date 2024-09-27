@@ -90,7 +90,7 @@ public class TaskController {
 
         String currentURL = request.getHeader("HX-Current-Url");
 
-        if (currentURL.contains("/completed_tasks")) {
+        if (currentURL.contains("/completed-tasks")) {
             engine.render(routingContext.data(), "fragments/SuccessAlertFragment::successAlert", res -> {
                 if (res.succeeded()) {
                     System.out.println("success----response : "+res.result());
