@@ -4,11 +4,7 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
-import org.example.application.Task;
 import org.example.application.TaskList;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class controllerMoethods {
 
@@ -112,11 +108,13 @@ public class controllerMoethods {
     public void markTaskCompleted(RoutingContext routingContext) {
         System.out.println("mark task completed");
         HttpServerRequest request = routingContext.request();
+        HttpServerResponse response = routingContext.response();
         int taskId = Integer.parseInt(request.getParam("taskId"));
 
         this.taskList.toggleCompleteCheckbox(taskId);
 
-        VerticleController.redirectHomePage(routingContext);
+        response.putHeader("HX-Refresh", Boolean.TRUE.toString());
+        response.end();
     }
 
     public void editTask(RoutingContext routingContext) {
