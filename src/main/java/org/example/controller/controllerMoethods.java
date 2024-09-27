@@ -67,23 +67,10 @@ public class controllerMoethods {
         });
     }
 
-    public void openCreateEditTaskModal(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
-        HttpServerRequest request = routingContext.request();
+    public void openCreateTaskModal(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
         HttpServerResponse response = routingContext.response();
 
-        String taskID = request.getParam("taskID");
-
-        String templateFileName = "components/modalCreateTask";
-
-        if (taskID != null) {
-            String taskToBeEdit = this.taskList.getTaskToBeEdit(Integer.parseInt(taskID));
-            routingContext.put("task", taskToBeEdit);
-            routingContext.put("taskID", taskID);
-            templateFileName = "components/EditTaskForm";
-
-        }
-
-        engine.render(routingContext.data(), templateFileName, res -> {
+        engine.render(routingContext.data(), "components/modalCreateTask", res -> {
             if (res.succeeded()) {
                 System.out.println("success");
                 response.end(res.result());
@@ -152,5 +139,23 @@ public class controllerMoethods {
         HttpServerResponse response = routingContext.response();
         response.putHeader("HX-Refresh", Boolean.TRUE.toString());
         response.end();
+    }
+
+    public void openEditTaskModal(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
+        HttpServerRequest request = routingContext.request();
+        HttpServerResponse response = routingContext.response();
+
+        int taskID = Integer.parseInt(request.getParam("taskID"));
+
+        routingContext.put("task", this.taskList.getTaskToBeEdit(taskID));
+
+        engine.render(routingContext.data(), "components/EditTaskForm", res -> {
+            if (res.succeeded()) {
+                System.out.println("success");
+                response.end(res.result());
+            } else {
+                res.cause().printStackTrace();
+            }
+        });
     }
 }

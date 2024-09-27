@@ -31,7 +31,7 @@
                 <td
                     class="px-6 py-4 font-medium"
                     @click="openEditTaskModal = !openEditTaskModal"
-                    th:attr="hx-get='/openCreatEditModal?taskID='+${task.id}"
+                    th:attr="hx-get='/openEditTaskModal?taskID='+${task.id}"
                     hx-target="#modalCreateTask"
                     hx-swap="innerHTML"
                 >

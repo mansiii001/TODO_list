@@ -69,14 +69,14 @@ public class MySQLConnect {
         }
     }
 
-    public String findTask(Integer taskID) throws Exception {
+    public Task findTask(Integer taskID) throws Exception {
         try {
             connect = getConnection();
             PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM todos where id = (?)");
             preparedStatement.setInt(1, taskID);
             resultSet = preparedStatement.executeQuery();
             ArrayList<Task> taskArrayList = returnResultSet(resultSet);
-            return taskArrayList.get(0).taskName;
+            return taskArrayList.get(0);
 
         } catch (Exception e){
             throw new Exception(e.getMessage());

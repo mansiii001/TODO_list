@@ -26,8 +26,8 @@
 
                 <div class="relative flex-auto mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <label>New Task :
-                        <input class="rounded-md p-3 m-3 bg-gray-100 w-10/12" type="text" id="new_task" name="new_task" th:value="${task}" required/>
-                        <input type="hidden" id="task_id" name="task_id" th:value="${taskID}">
+                        <input class="rounded-md p-3 m-3 bg-gray-100 w-10/12" type="text" id="new_task" name="new_task" th:value="${task.taskName}" required/>
+                        <input type="hidden" id="task_id" name="task_id" th:value="${task.id}">
                     </label>
                 </div>
 
