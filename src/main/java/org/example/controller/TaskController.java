@@ -6,7 +6,7 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 import org.example.application.TaskListOperations;
 
-public class controllerMoethods {
+public class TaskController {
 
     TaskListOperations taskList = new TaskListOperations();
 

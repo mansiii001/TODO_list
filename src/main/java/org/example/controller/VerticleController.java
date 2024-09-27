@@ -30,18 +30,18 @@ public class VerticleController extends AbstractVerticle {
 
         router.route("/static/*").handler(StaticHandler.create());
 
-        controllerMoethods controllerMoethods = new controllerMoethods();
+        TaskController taskController = new TaskController();
 
-        router.get("/").handler(routingContext -> controllerMoethods.unCompletedTaskPage(routingContext, engine));
-        router.get("/completed_tasks").handler(routingContext -> controllerMoethods.getAllCompletedTasks(routingContext, engine));
-        router.get("/uncompleted_tasks").handler(routingContext -> controllerMoethods.unCompletedTaskPage(routingContext, engine));
+        router.get("/").handler(routingContext -> taskController.unCompletedTaskPage(routingContext, engine));
+        router.get("/completed_tasks").handler(routingContext -> taskController.getAllCompletedTasks(routingContext, engine));
+        router.get("/uncompleted_tasks").handler(routingContext -> taskController.unCompletedTaskPage(routingContext, engine));
 
-        router.get("/add-task").handler(routingContext -> controllerMoethods.addNewTask(routingContext));
-        router.get("/edit-task").handler(routingContext -> controllerMoethods.editTask(routingContext));
-        router.get("/delete").handler(routingContext -> controllerMoethods.deleteTask(routingContext));
-        router.get("/openCreateTaskModal").handler(routingContext -> controllerMoethods.openCreateTaskModal(routingContext, engine));
-        router.get("/openEditTaskModal").handler(routingContext -> controllerMoethods.openEditTaskModal(routingContext, engine));
-        router.get("/markCompleted").handler(routingContext -> controllerMoethods.markTaskCompleted(routingContext));
+        router.get("/add-task").handler(routingContext -> taskController.addNewTask(routingContext));
+        router.get("/edit-task").handler(routingContext -> taskController.editTask(routingContext));
+        router.get("/delete").handler(routingContext -> taskController.deleteTask(routingContext));
+        router.get("/openCreateTaskModal").handler(routingContext -> taskController.openCreateTaskModal(routingContext, engine));
+        router.get("/openEditTaskModal").handler(routingContext -> taskController.openEditTaskModal(routingContext, engine));
+        router.get("/markCompleted").handler(routingContext -> taskController.markTaskCompleted(routingContext));
 
         HttpServer httpServer = vertx.createHttpServer();
         httpServer.requestHandler(router).listen(8080, "localhost", res->{
