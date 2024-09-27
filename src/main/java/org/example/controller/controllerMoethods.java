@@ -15,7 +15,7 @@ public class controllerMoethods {
         HttpServerRequest request = routingContext.request();
         response.putHeader("content-type", "text/html");
 
-        routingContext.put("tasks", this.taskList.allUnCkecked());
+        routingContext.put("tasks", this.taskList.unCheckedTasks());
 
         String isHTMXCall = request.getHeader("HX-Request");
 
@@ -42,7 +42,7 @@ public class controllerMoethods {
 
         response.putHeader("content-type", "text/html");
 
-        routingContext.put("tasks", this.taskList.allCkecked());
+        routingContext.put("tasks", this.taskList.checkedTasks());
 
         String isHTMXCall = request.getHeader("HX-Request");
 

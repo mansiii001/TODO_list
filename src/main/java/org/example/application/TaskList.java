@@ -29,18 +29,6 @@ public class TaskList {
         }
     }
 
-    public List<Task> allUnCkecked() {
-        try{
-            MySQLConnect mySQLConnect = new MySQLConnect();
-            ArrayList<Task> taskArrayList = mySQLConnect.readAll();
-            return unCheckedTasks(taskArrayList);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     public static Task getTaskToBeEdit(int taskID) {
         try {
             MySQLConnect mySQLConnect = new MySQLConnect();
@@ -52,24 +40,14 @@ public class TaskList {
         }
     }
 
-    public Object allCkecked() {
-        try{
-            MySQLConnect mySQLConnect = new MySQLConnect();
-            ArrayList<Task> taskArrayList = mySQLConnect.readAll();
-            return checkedTasks(taskArrayList);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public List<Task> unCheckedTasks() {
+        List<Task> allTasks = getAllTasks();
+        return allTasks.stream().filter(task -> !task.isDone).collect(Collectors.toList());
     }
 
-    private List<Task> unCheckedTasks(ArrayList<Task> taskArrayList) {
-        return taskArrayList.stream().filter(task -> !task.isDone).collect(Collectors.toList());
-    }
-
-    private List<Task> checkedTasks(ArrayList<Task> taskArrayList) {
-        return taskArrayList.stream().filter(task -> task.isDone).collect(Collectors.toList());
+    public List<Task> checkedTasks() {
+        List<Task> allTasks = getAllTasks();
+        return allTasks.stream().filter(task -> task.isDone).collect(Collectors.toList());
     }
 
     public void deleteTask(int taskID) {
