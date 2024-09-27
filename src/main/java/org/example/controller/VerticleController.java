@@ -2,9 +2,7 @@ package org.example.controller;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServer;
-import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
-import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 import org.example.CustomThymeleafTemplateEngineImpl;
@@ -55,9 +53,4 @@ public class VerticleController extends AbstractVerticle {
         });
     }
 
-    static void redirectHomePage(RoutingContext routingContext) {
-        HttpServerResponse response = routingContext.response();
-        response.putHeader("HX-Redirect","/");
-        response.end();
-    }
 }
