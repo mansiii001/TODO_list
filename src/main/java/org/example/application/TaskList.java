@@ -10,14 +10,10 @@ public class TaskList {
     NewTaskList newTaskList = new NewTaskList();
 
     public void addTask(String taskName) throws Exception {
-
         if(taskName.isEmpty()){
             throw new Exception("taskName can not be empty");
         }
-
-        MySQLConnect mySQLConnect = new MySQLConnect();
-        mySQLConnect.createNewTask(taskName);
-
+        NewTaskList.addNewTask(taskName);
     }
 
     public List<Task> getAllTasks() {
