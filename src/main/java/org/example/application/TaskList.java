@@ -70,9 +70,8 @@ public class TaskList {
 
     public void toggleCompleteCheckbox(Integer taskId) {
 
-        List<Task> allTasks = getAllTasks();
-        Task filteredTask = allTasks.stream().filter(task -> task.id == taskId).collect(Collectors.toList()).get(0);
-        boolean isCompleted = filteredTask.isDone;
+        Task task = findTask(taskId);
+        boolean isCompleted = task.isDone;
 
         try {
             MySQLConnect mySQLConnect = new MySQLConnect();
@@ -80,5 +79,10 @@ public class TaskList {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Task findTask(Integer taskID) {
+        List<Task> allTasks = getAllTasks();
+        return allTasks.stream().filter(task -> task.id == taskID).collect(Collectors.toList()).get(0);
     }
 }
