@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 public class TaskList {
 
+    NewTaskList newTaskList = new NewTaskList();
+
     public void addTask(String taskName) throws Exception {
 
         if(taskName.isEmpty()){
@@ -19,14 +21,7 @@ public class TaskList {
     }
 
     public List<Task> getAllTasks() {
-        try{
-            MySQLConnect mySQLConnect = new MySQLConnect();
-            return mySQLConnect.readAll();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return  newTaskList.allTasks;
     }
 
     public static Task getTaskToBeEdit(int taskID) {

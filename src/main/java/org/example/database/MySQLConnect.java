@@ -14,22 +14,6 @@ public class MySQLConnect {
         return DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_list", "root", "12345678");
     }
 
-    public ArrayList<Task> readAll() throws Exception {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connect = getConnection();
-            statement = connect.createStatement();
-            resultSet = statement.executeQuery("select * from todos");
-
-            return returnResultSet(resultSet);
-
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
-        } finally {
-            close();
-        }
-    }
-
     private ArrayList<Task> returnResultSet(ResultSet resultSet) throws SQLException {
         ArrayList<Task> tasks = new ArrayList<>();
         while (resultSet.next()) {
