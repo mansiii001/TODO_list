@@ -20,4 +20,13 @@ public class NewTaskList {
         allTasks.add(writing);
     }
 
+    public static Task findTask(int taskID){
+        for (Task task : allTasks){
+            if(task.id == taskID){
+                return task;
+            }
+        }
+        return null;
+    }
+
 }

@@ -25,14 +25,7 @@ public class TaskList {
     }
 
     public static Task getTaskToBeEdit(int taskID) {
-        try {
-            MySQLConnect mySQLConnect = new MySQLConnect();
-            Task task = mySQLConnect.findTask(taskID);
-            return task;
-        } catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
+        return NewTaskList.findTask(taskID);
     }
 
     public List<Task> unCheckedTasks() {

@@ -14,17 +14,6 @@ public class MySQLConnect {
         return DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_list", "root", "12345678");
     }
 
-    private ArrayList<Task> returnResultSet(ResultSet resultSet) throws SQLException {
-        ArrayList<Task> tasks = new ArrayList<>();
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String taskName = resultSet.getString("task");
-            boolean isDone = resultSet.getBoolean("isCompleted");
-            tasks.add(new Task(id, taskName, isDone));
-        }
-        return tasks;
-    }
-
     public void createNewTask(String task) throws Exception {
         try {
             connect = getConnection();
@@ -45,22 +34,6 @@ public class MySQLConnect {
             PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM todos where id = (?)");
             preparedStatement.setInt(1, taskID);
             preparedStatement.executeUpdate();
-
-        } catch (Exception e){
-            throw new Exception(e.getMessage());
-        } finally {
-            close();
-        }
-    }
-
-    public Task findTask(Integer taskID) throws Exception {
-        try {
-            connect = getConnection();
-            PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM todos where id = (?)");
-            preparedStatement.setInt(1, taskID);
-            resultSet = preparedStatement.executeQuery();
-            ArrayList<Task> taskArrayList = returnResultSet(resultSet);
-            return taskArrayList.get(0);
 
         } catch (Exception e){
             throw new Exception(e.getMessage());
