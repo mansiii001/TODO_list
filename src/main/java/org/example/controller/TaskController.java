@@ -65,11 +65,8 @@ public class TaskController {
 
         String taskName = request.getParam("new_task");
 
-        try {
-            this.taskList.addTask(taskName);
-        } catch (Exception e) {
-            response.setStatusCode(400).end(e.getMessage());
-        }
+        Integer statusCode = this.taskList.addTask(taskName);
+        response.setStatusCode(statusCode);
 
         String currentURL = request.getHeader("HX-Current-Url");
 

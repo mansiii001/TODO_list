@@ -7,11 +7,12 @@ public class TaskListOperations {
 
     TaskList taskList = new TaskList();
 
-    public void addTask(String taskName) throws Exception {
+    public Integer addTask(String taskName){
         if(taskName.isEmpty()){
-            throw new Exception("taskName can not be empty");
+            return 400;
         }
         TaskList.addNewTask(taskName);
+        return 200;
     }
 
     public List<Task> getAllTasks() {
