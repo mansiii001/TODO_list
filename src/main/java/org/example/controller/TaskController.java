@@ -43,21 +43,12 @@ public class TaskController {
         response.putHeader("content-type", "text/html");
 
         routingContext.put("tasks", this.taskList.checkedTasks());
-
-        String isHTMXCall = request.getHeader("HX-Request");
-
-        String templateFileName = "completedTasks";
-
-        if(isHTMXCall != null) {
-            templateFileName = "completedTasks::completedTask";
-        }
+        String templateFileName = (request.getHeader("HX-Request") != null) ? "completedTasks::completedTask" : "completedTasks";
 
         engine.render(routingContext.data(), templateFileName, res -> {
             if (res.succeeded()) {
-                System.out.println("success");
                 response.end(res.result());
             } else {
-                System.out.println("failed");
                 res.cause().printStackTrace();
             }
         });
