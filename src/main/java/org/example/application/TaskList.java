@@ -11,7 +11,7 @@ public class TaskList {
         Task learning = new Task(2, "Learning", false);
         Task reading = new Task(3, "Reading", false);
         Task swimming = new Task(4, "Swimming", false);
-        Task writing = new Task(5, "Writing", false);
+        Task writing = new Task(5, "Writing", false, "taskDescription testing...");
 
         allTasks.add(homeWork);
         allTasks.add(learning);
@@ -38,9 +38,10 @@ public class TaskList {
         allTasks.remove(findTask(taskID));
     }
 
-    public static void editTask(int taskID, String taskName){
+    public static void editTask(int taskID, String taskName, String taskDescription){
         Task task = findTask(taskID);
         task.setTaskName(taskName);
+        task.setTaskDescription(taskDescription);
     }
 
     public static void toggleTaskCompleteMark(int taskID, Boolean checkBoxMark){

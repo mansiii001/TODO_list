@@ -24,10 +24,15 @@
                     <h5 class="font-bold">Edit Task</h5>
                 </div>
 
-                <div class="relative block flex-auto m-3 p-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                <div class="relative block flex-auto mt-3 p-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <label for="new_task">New Task : </label>
                     <input class="rounded-md p-3 mt-3 bg-gray-100 w-full" type="text" id="new_task" name="new_task" th:value="${task.taskName}" required/>
                     <input type="hidden" id="task_id" name="task_id" th:value="${task.id}">
+                </div>
+
+                <div class="relative block flex-auto mt -3 p-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <label for="taskDescription">Task Description : </label>
+                    <textarea rows="2" class="rounded-md p-3 mt-3 bg-gray-100 w-full" type="text" id="taskDescription" name="taskDescription" th:text="${task.taskDescription}"></textarea>
                 </div>
 
                 <div class="flex flex-wrap relative shrink-0 items-center justify-end p-3 border-t border-solid border-gray-500 rounded-b m-1">
