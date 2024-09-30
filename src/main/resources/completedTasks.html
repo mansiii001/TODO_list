@@ -11,6 +11,13 @@
 
     <div id="taskTable">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500" th:fragment="completedTask" id="all_task">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-300 border-b border-solid border-gray-900">
+            <th class="px-6 py-4 text-left" scope="col"></th>
+            <th class="px-6 py-4 text-left" scope="col">Task Name</th>
+            <th class="px-6 py-4 text-left" scope="col">Task Description</th>
+            <th class="px-6 py-4 text-left" scope="col"></th>
+            <th class="px-6 py-4 text-left" scope="col"></th>
+        </thead>
         <tbody hx-target="closest tr" hx-swap="outerHTML">
             <tr class="border-b border-solid border-gray-900 text-gray-900 hover:bg-gray-50 " th:each="task : ${tasks}">
                 <td class="px-6 py-4 items-center w-1/12">
