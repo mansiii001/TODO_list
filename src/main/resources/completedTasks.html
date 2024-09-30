@@ -9,45 +9,50 @@
     <div th:insert="fragments/NavigationBar::navbar"></div>
 
 
-    <div id="taskTable">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500" th:fragment="completedTask" id="all_task">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-300 border-b border-solid border-gray-900">
-            <th class="px-6 py-4 text-left" scope="col"></th>
-            <th class="px-6 py-4 text-left" scope="col">Task Name</th>
-            <th class="px-6 py-4 text-left" scope="col">Task Description</th>
-            <th class="px-6 py-4 text-left" scope="col"></th>
-            <th class="px-6 py-4 text-left" scope="col"></th>
-        </thead>
-        <tbody hx-target="closest tr" hx-swap="outerHTML">
-            <tr class="border-b border-solid border-gray-900 text-gray-900 hover:bg-gray-50 " th:each="task : ${tasks}">
-                <td class="px-6 py-4 items-center w-1/12">
-                    <input
-                        th:attr="checked=${task.isDone}, hx-get='/markCompleted?taskId='+${task.id}"
-                        id="default-checkbox"
-                        type="checkbox"
-                        value=""
-                        class="border-gray-900 rounded focus:ring-blue-500 focus:ring-2">
-                </td>
-                <td class="px-6 py-4 text-left" th:text="${task.taskName}"></td>
-                <td class="px-6 py-4 text-left" th:text="(${task.taskDescription}!='')? ${task.taskDescription} : '-'"></td>
-                <td
-                    class="px-6 py-4 font-medium"
-                    th:attr="hx-delete='/delete?taskID='+${task.id}"
-                >
-                    <div class="font-medium text-blue-600 hover:underline">Delete</div>
-                </td>
-                <td
-                    class="px-6 py-4 font-medium"
-                    @click="openEditTaskModal = !openEditTaskModal"
-                    th:attr="hx-get='/openEditTaskModal?taskID='+${task.id}"
-                    hx-target="#modalCreateTask"
-                    hx-swap="innerHTML"
-                >
-                    <div class="font-medium text-blue-600 hover:underline">Edit</div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div id="taskTable" th:switch="${not #lists.isEmpty(tasks)}" th:fragment="completedTask">
+        <div th:case="${true}">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500" id="all_task">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-300 border-b border-solid border-gray-900">
+                    <th class="px-6 py-4 text-left" scope="col"></th>
+                    <th class="px-6 py-4 text-left" scope="col">Task Name</th>
+                    <th class="px-6 py-4 text-left" scope="col">Task Description</th>
+                    <th class="px-6 py-4 text-left" scope="col"></th>
+                    <th class="px-6 py-4 text-left" scope="col"></th>
+                </thead>
+                <tbody hx-target="closest tr" hx-swap="outerHTML">
+                    <tr class="border-b border-solid border-gray-900 text-gray-900 hover:bg-gray-50 " th:each="task : ${tasks}">
+                        <td class="px-6 py-4 items-center w-1/12">
+                            <input
+                                th:attr="checked=${task.isDone}, hx-get='/markCompleted?taskId='+${task.id}"
+                                id="default-checkbox"
+                                type="checkbox"
+                                value=""
+                                class="border-gray-900 rounded focus:ring-blue-500 focus:ring-2">
+                        </td>
+                        <td class="px-6 py-4 text-left" th:text="${task.taskName}"></td>
+                        <td class="px-6 py-4 text-left" th:text="(${task.taskDescription}!='')? ${task.taskDescription} : '-'"></td>
+                        <td
+                            class="px-6 py-4 font-medium"
+                            th:attr="hx-delete='/delete?taskID='+${task.id}"
+                        >
+                            <div class="font-medium text-blue-600 hover:underline">Delete</div>
+                        </td>
+                        <td
+                            class="px-6 py-4 font-medium"
+                            @click="openEditTaskModal = !openEditTaskModal"
+                            th:attr="hx-get='/openEditTaskModal?taskID='+${task.id}"
+                            hx-target="#modalCreateTask"
+                            hx-swap="innerHTML"
+                        >
+                            <div class="font-medium text-blue-600 hover:underline">Edit</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:case="*" class="w-full text-center">
+            <h1 class="w-64 text-gray-900 place-items-stretch text-3xl"> NO DATA FOUND </h1>
+        </div>
     </div>
 
 <span id="modalCreateTask"></span>
