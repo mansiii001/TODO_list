@@ -7,11 +7,11 @@ public class TaskListOperations {
 
     TaskList taskList = new TaskList();
 
-    public Integer addTask(String taskName){
+    public Integer addTask(String taskName, String taskDescription) {
         if(taskName.isEmpty()){
             return 400;
         }
-        TaskList.addNewTask(taskName);
+        TaskList.addNewTask(taskName, taskDescription);
         return 200;
     }
 

@@ -29,8 +29,8 @@ public class TaskList {
         return null;
     }
 
-    public static void addNewTask(String taskName){
-        Task task = new Task(allTasks.size() + 1, taskName, false);
+    public static void addNewTask(String taskName, String taskDescription){
+        Task task = new Task(allTasks.size() + 1, taskName, false, taskDescription);
         allTasks.add(task);
     }
 

@@ -64,8 +64,9 @@ public class TaskController {
         HttpServerResponse response = routingContext.response();
 
         String taskName = request.getParam("new_task");
+        String taskDescription = request.getParam("taskDescription");
 
-        Integer statusCode = this.taskList.addTask(taskName);
+        Integer statusCode = this.taskList.addTask(taskName, taskDescription);
         response.setStatusCode(statusCode);
 
         String currentURL = request.getHeader("HX-Current-Url");
