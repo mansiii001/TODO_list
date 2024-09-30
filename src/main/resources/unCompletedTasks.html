@@ -11,7 +11,7 @@
     <div id="taskTable">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500" th:fragment="unCompletedTask" id="all_task">
             <tbody hx-target="closest tr" hx-swap="outerHTML">
-            <tr class="border-b border-solid border-gray-900 text-gray-900 hover:bg-gray-50"  th:each="task : ${tasks}" hx-swap-oob="true">
+            <tr class="border-b border-solid border-gray-900 text-gray-900 hover:bg-gray-50 " th:each="task : ${tasks}">
                 <td class="px-6 py-4 items-center w-1/12">
                     <input
                             th:attr="checked=${task.isDone}, hx-get='/markCompleted?taskId='+${task.id}"
