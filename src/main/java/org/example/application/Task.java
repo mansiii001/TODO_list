@@ -6,13 +6,6 @@ public class Task {
     public Boolean isDone;
     public String taskDescription;
 
-    public Task(int id, String taskName, Boolean isDone) {
-        this.id = id;
-        this.taskName = taskName;
-        this.isDone = isDone;
-        this.taskDescription = "";
-    }
-
     public Task(int id, String taskName, Boolean isDone, String taskDescription) {
         this.id = id;
         this.taskName = taskName;

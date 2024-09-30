@@ -7,10 +7,10 @@ public class TaskList {
     static final ArrayList<Task> allTasks = new ArrayList<>();
 
     public TaskList() {
-        Task homeWork = new Task(1, "HomeWork", false);
-        Task learning = new Task(2, "Learning", false);
-        Task reading = new Task(3, "Reading", false);
-        Task swimming = new Task(4, "Swimming", false);
+        Task homeWork = new Task(1, "HomeWork", false, "");
+        Task learning = new Task(2, "Learning", false, "");
+        Task reading = new Task(3, "Reading", false, "");
+        Task swimming = new Task(4, "Swimming", false, "");
         Task writing = new Task(5, "Writing", false, "taskDescription testing...");
 
         allTasks.add(homeWork);
