@@ -1,5 +1,6 @@
 package org.example.application;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -7,11 +8,11 @@ public class TaskListOperations {
 
     TaskList taskList = new TaskList();
 
-    public Integer addTask(String taskName, String taskDescription) {
+    public Integer addTask(String taskName, String taskDescription, LocalDate dueDate) {
         if(taskName.isEmpty()){
             return 400;
         }
-        TaskList.addNewTask(taskName, taskDescription);
+        TaskList.addNewTask(taskName, taskDescription, dueDate);
         return 200;
     }
 

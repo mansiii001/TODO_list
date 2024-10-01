@@ -6,6 +6,8 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 import org.example.application.TaskListOperations;
 
+import java.time.LocalDate;
+
 public class TaskController {
 
     TaskListOperations taskList = new TaskListOperations();
@@ -49,6 +51,8 @@ public class TaskController {
     public void openCreateTaskModal(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
         HttpServerResponse response = routingContext.response();
 
+        routingContext.put("dueDate", LocalDate.now());
+
         engine.render(routingContext.data(), "components/modalCreateTask", res -> {
             if (res.succeeded()) {
                 System.out.println("success");
@@ -65,8 +69,9 @@ public class TaskController {
 
         String taskName = request.getParam("new_task");
         String taskDescription = request.getParam("taskDescription");
+        LocalDate dueDate = LocalDate.parse(request.getParam("dueDate"));
 
-        Integer statusCode = this.taskList.addTask(taskName, taskDescription);
+        Integer statusCode = this.taskList.addTask(taskName, taskDescription, dueDate);
         response.setStatusCode(statusCode);
 
         String currentURL = request.getHeader("HX-Current-Url");

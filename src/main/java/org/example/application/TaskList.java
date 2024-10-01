@@ -1,5 +1,6 @@
 package org.example.application;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -29,8 +30,8 @@ public class TaskList {
         return null;
     }
 
-    public static void addNewTask(String taskName, String taskDescription){
-        Task task = new Task(allTasks.size() + 1, taskName, false, taskDescription);
+    public static void addNewTask(String taskName, String taskDescription, LocalDate dueDate){
+        Task task = new Task(allTasks.size() + 1, taskName, false, taskDescription, dueDate);
         allTasks.add(task);
     }
 
