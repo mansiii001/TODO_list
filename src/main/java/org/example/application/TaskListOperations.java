@@ -35,7 +35,7 @@ public class TaskListOperations {
 
     public String convertDateToString(Date date) {
         int day = date.getDate();
-        int month = date.getMonth();
+        int month = date.getMonth() + 1;
         int year = date.getYear() + 1900;
 
         String monthString = month < 10 ? formatWithLeadingZeros(month) : Integer.toString(month);
@@ -48,7 +48,7 @@ public class TaskListOperations {
     public Date convertStringToDate(String stringDate) {
         String[] dateComponents = stringDate.split("-");
         int year = Integer.parseInt(dateComponents[0]) - 1900;
-        int month = Integer.parseInt(dateComponents[1]);
+        int month = Integer.parseInt(dateComponents[1]) - 1;
         int day = Integer.parseInt(dateComponents[2]);
         return new Date(year, month, day);
     }

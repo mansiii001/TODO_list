@@ -8,11 +8,11 @@ public class TaskList {
     static final ArrayList<Task> allTasks = new ArrayList<>();
 
     public TaskList() {
-        Task homeWork = new Task(1, "HomeWork", false, "", new Date(2024, 12, 19));
-        Task learning = new Task(2, "Learning", false, "", new Date(2022, 2, 10));
-        Task reading = new Task(3, "Reading", false, "", new Date(2019, 11, 9));
-        Task swimming = new Task(4, "Swimming", false, "", new Date(2001, 8, 4));
-        Task writing = new Task(5, "Writing", false, "taskDescription testing...", new Date(2024, 7, 15));
+        Task homeWork = new Task(1, "HomeWork", false, "", new Date(2024 - 1900, 12 - 1, 19));
+        Task learning = new Task(2, "Learning", false, "", new Date(2022 - 1900, 2 - 1, 10));
+        Task reading = new Task(3, "Reading", false, "", new Date(2019 - 1900, 11 - 1, 9));
+        Task swimming = new Task(4, "Swimming", false, "", new Date(2001 - 1900, 8 - 1, 4));
+        Task writing = new Task(5, "Writing", false, "taskDescription testing...", new Date(2024 - 1900, 7 - 1, 15));
 
         allTasks.add(homeWork);
         allTasks.add(learning);
