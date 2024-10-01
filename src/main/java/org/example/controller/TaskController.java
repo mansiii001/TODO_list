@@ -7,6 +7,7 @@ import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 import org.example.application.TaskListOperations;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class TaskController {
 
@@ -51,7 +52,7 @@ public class TaskController {
     public void openCreateTaskModal(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
         HttpServerResponse response = routingContext.response();
 
-        routingContext.put("dueDate", LocalDate.now());
+        routingContext.put("dueDate", taskList.convertDateToString(new Date()));
 
         engine.render(routingContext.data(), "components/modalCreateTask", res -> {
             if (res.succeeded()) {

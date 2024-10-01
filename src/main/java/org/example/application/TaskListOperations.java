@@ -34,6 +34,22 @@ public class TaskListOperations {
         return allTasks.stream().filter(task -> task.isDone).collect(Collectors.toList());
     }
 
+    public String convertDateToString(Date date) {
+        int day = date.getDate();
+        int month = date.getMonth();
+        int year = date.getYear() + 1900;
+
+        String monthString = month < 10 ? formatWithLeadingZeros(month) : Integer.toString(month);
+        String dayString = day < 10 ? formatWithLeadingZeros(day) : Integer.toString(day);
+        String yearString = Integer.toString(year);
+
+        return yearString + "-" + monthString + "-" + dayString;
+    }
+
+    private String formatWithLeadingZeros(int number){
+        return String.format("%02d", number);
+    }
+
     public void deleteTask(int taskID) {
         TaskList.removeTask(taskID);
     }
