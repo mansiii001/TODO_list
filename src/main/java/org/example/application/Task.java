@@ -9,18 +9,15 @@ public class Task {
     public String taskDescription;
     public LocalDate dueDate;
 
-    public Task(int id, String taskName, Boolean isDone, String taskDescription) {
-        this.id = id;
-        this.taskName = taskName;
-        this.isDone = isDone;
-        this.taskDescription = taskDescription;
-    }
-
     public Task(int id, String taskName, Boolean isDone, String taskDescription, LocalDate dueDate) {
         this.id = id;
         this.taskName = taskName;
         this.isDone = isDone;
         this.taskDescription = taskDescription;
+        this.dueDate = dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 

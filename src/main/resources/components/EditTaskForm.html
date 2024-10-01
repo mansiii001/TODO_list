@@ -35,6 +35,11 @@
                     <textarea rows="2" class="rounded-md p-3 mt-3 bg-gray-100 w-full" type="text" id="taskDescription" name="taskDescription" th:text="${task.taskDescription}"></textarea>
                 </div>
 
+                <div class="relative block flex-auto mt -3 p-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <label for="dueDate">Due Date : </label>
+                    <input datepicker id="dueDate" name="dueDate" type="date" class="rounded-md p-3 mt-3 bg-gray-100 w-full" th:value="${task.dueDate}">
+                </div>
+
                 <div class="flex flex-wrap relative shrink-0 items-center justify-end p-3 border-t border-solid border-gray-500 rounded-b m-1">
                     <button
                             class="rounded-md bg-gray-900 px-3 py-2 mr-1.5 text-sm font-medium text-gray-50 hover:text-gray-900 hover:bg-gray-50 hover:border-gray-900"

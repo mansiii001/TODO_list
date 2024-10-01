@@ -38,11 +38,11 @@ public class TaskListOperations {
         TaskList.removeTask(taskID);
     }
 
-    public Integer editTask(Integer taskID, String taskName, String taskDescription) {
+    public Integer editTask(Integer taskID, String taskName, String taskDescription, LocalDate dueDate) {
         if(taskName.isEmpty()){
             return 400;
         }
-        TaskList.editTask(taskID, taskName, taskDescription);
+        TaskList.editTask(taskID, taskName, taskDescription, dueDate);
         return 200;
     }
 

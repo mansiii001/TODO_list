@@ -8,11 +8,11 @@ public class TaskList {
     static final ArrayList<Task> allTasks = new ArrayList<>();
 
     public TaskList() {
-        Task homeWork = new Task(1, "HomeWork", false, "");
-        Task learning = new Task(2, "Learning", false, "");
-        Task reading = new Task(3, "Reading", false, "");
-        Task swimming = new Task(4, "Swimming", false, "");
-        Task writing = new Task(5, "Writing", false, "taskDescription testing...");
+        Task homeWork = new Task(1, "HomeWork", false, "", LocalDate.now());
+        Task learning = new Task(2, "Learning", false, "", LocalDate.now());
+        Task reading = new Task(3, "Reading", false, "", LocalDate.now());
+        Task swimming = new Task(4, "Swimming", false, "", LocalDate.now());
+        Task writing = new Task(5, "Writing", false, "taskDescription testing...", LocalDate.now());
 
         allTasks.add(homeWork);
         allTasks.add(learning);
@@ -39,10 +39,11 @@ public class TaskList {
         allTasks.remove(findTask(taskID));
     }
 
-    public static void editTask(int taskID, String taskName, String taskDescription){
+    public static void editTask(int taskID, String taskName, String taskDescription, LocalDate dueDate){
         Task task = findTask(taskID);
         task.setTaskName(taskName);
         task.setTaskDescription(taskDescription);
+        task.setDueDate(dueDate);
     }
 
     public static void toggleTaskCompleteMark(int taskID, Boolean checkBoxMark){
