@@ -4,9 +4,9 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
+import org.example.application.Task;
 import org.example.application.TaskListOperations;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 public class TaskController {
@@ -70,9 +70,9 @@ public class TaskController {
 
         String taskName = request.getParam("new_task");
         String taskDescription = request.getParam("taskDescription");
-        LocalDate dueDate = LocalDate.parse(request.getParam("dueDate"));
+        String stringDate = request.getParam("dueDate");
 
-        Integer statusCode = this.taskList.addTask(taskName, taskDescription, dueDate);
+        Integer statusCode = this.taskList.addTask(taskName, taskDescription, stringDate);
         response.setStatusCode(statusCode);
 
         String currentURL = request.getHeader("HX-Current-Url");
@@ -122,9 +122,9 @@ public class TaskController {
         int taskId = Integer.parseInt(request.getParam("task_id"));
         String taskName = request.getParam("new_task");
         String taskDescription = request.getParam("taskDescription");
-        LocalDate dueDate = LocalDate.parse(request.getParam("dueDate"));
+        String stringDate = request.getParam("dueDate");
 
-        Integer statusCode = this.taskList.editTask(taskId, taskName, taskDescription, dueDate);
+        Integer statusCode = this.taskList.editTask(taskId, taskName, taskDescription, stringDate);
         response.setStatusCode(statusCode);
 
         response.putHeader("HX-Refresh", Boolean.TRUE.toString());
@@ -137,7 +137,9 @@ public class TaskController {
 
         int taskID = Integer.parseInt(request.getParam("taskID"));
 
-        routingContext.put("task", this.taskList.getTaskToBeEdit(taskID));
+        Task taskToBeEdit = this.taskList.getTaskToBeEdit(taskID);
+        routingContext.put("task", taskToBeEdit);
+        routingContext.put("dueDate", taskList.convertDateToString(taskToBeEdit.taskDueDate));
 
         engine.render(routingContext.data(), "components/EditTaskForm", res -> {
             if (res.succeeded()) {

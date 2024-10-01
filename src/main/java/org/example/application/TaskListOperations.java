@@ -1,6 +1,5 @@
 package org.example.application;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -8,11 +7,11 @@ public class TaskListOperations {
 
     TaskList taskList = new TaskList();
 
-    public Integer addTask(String taskName, String taskDescription, LocalDate dueDate) {
+    public Integer addTask(String taskName, String taskDescription, String stringDate) {
         if(taskName.isEmpty()){
             return 400;
         }
-        TaskList.addNewTask(taskName, taskDescription, dueDate);
+        TaskList.addNewTask(taskName, taskDescription, convertStringToDate(stringDate));
         return 200;
     }
 
@@ -46,6 +45,14 @@ public class TaskListOperations {
         return yearString + "-" + monthString + "-" + dayString;
     }
 
+    public Date convertStringToDate(String stringDate) {
+        String[] dateComponents = stringDate.split("-");
+        int year = Integer.parseInt(dateComponents[0]) - 1900;
+        int month = Integer.parseInt(dateComponents[1]);
+        int day = Integer.parseInt(dateComponents[2]);
+        return new Date(year, month, day);
+    }
+
     private String formatWithLeadingZeros(int number){
         return String.format("%02d", number);
     }
@@ -54,11 +61,11 @@ public class TaskListOperations {
         TaskList.removeTask(taskID);
     }
 
-    public Integer editTask(Integer taskID, String taskName, String taskDescription, LocalDate dueDate) {
+    public Integer editTask(Integer taskID, String taskName, String taskDescription, String stringDate) {
         if(taskName.isEmpty()){
             return 400;
         }
-        TaskList.editTask(taskID, taskName, taskDescription, dueDate);
+        TaskList.editTask(taskID, taskName, taskDescription, convertStringToDate(stringDate));
         return 200;
     }
 

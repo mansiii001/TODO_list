@@ -1,18 +1,18 @@
 package org.example.application;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TaskList {
 
     static final ArrayList<Task> allTasks = new ArrayList<>();
 
     public TaskList() {
-        Task homeWork = new Task(1, "HomeWork", false, "", LocalDate.now());
-        Task learning = new Task(2, "Learning", false, "", LocalDate.now());
-        Task reading = new Task(3, "Reading", false, "", LocalDate.now());
-        Task swimming = new Task(4, "Swimming", false, "", LocalDate.now());
-        Task writing = new Task(5, "Writing", false, "taskDescription testing...", LocalDate.now());
+        Task homeWork = new Task(1, "HomeWork", false, "", new Date(2024, 12, 19));
+        Task learning = new Task(2, "Learning", false, "", new Date(2022, 2, 10));
+        Task reading = new Task(3, "Reading", false, "", new Date(2019, 11, 9));
+        Task swimming = new Task(4, "Swimming", false, "", new Date(2001, 8, 4));
+        Task writing = new Task(5, "Writing", false, "taskDescription testing...", new Date(2024, 7, 15));
 
         allTasks.add(homeWork);
         allTasks.add(learning);
@@ -30,7 +30,7 @@ public class TaskList {
         return null;
     }
 
-    public static void addNewTask(String taskName, String taskDescription, LocalDate dueDate){
+    public static void addNewTask(String taskName, String taskDescription, Date dueDate){
         Task task = new Task(allTasks.size() + 1, taskName, false, taskDescription, dueDate);
         allTasks.add(task);
     }
@@ -39,11 +39,11 @@ public class TaskList {
         allTasks.remove(findTask(taskID));
     }
 
-    public static void editTask(int taskID, String taskName, String taskDescription, LocalDate dueDate){
+    public static void editTask(int taskID, String taskName, String taskDescription, Date dueDate){
         Task task = findTask(taskID);
         task.setTaskName(taskName);
         task.setTaskDescription(taskDescription);
-        task.setDueDate(dueDate);
+        task.setTaskDueDate(dueDate);
     }
 
     public static void toggleTaskCompleteMark(int taskID, Boolean checkBoxMark){

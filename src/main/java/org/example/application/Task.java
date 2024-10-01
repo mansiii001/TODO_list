@@ -1,24 +1,24 @@
 package org.example.application;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Task {
     public int id;
     public String taskName;
     public Boolean isDone;
     public String taskDescription;
-    public LocalDate dueDate;
+    public Date taskDueDate;
 
-    public Task(int id, String taskName, Boolean isDone, String taskDescription, LocalDate dueDate) {
+    public Task(int id, String taskName, Boolean isDone, String taskDescription, Date dueDate) {
         this.id = id;
         this.taskName = taskName;
         this.isDone = isDone;
         this.taskDescription = taskDescription;
-        this.dueDate = dueDate;
+        this.taskDueDate = dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
+    public void setTaskDueDate(Date taskDueDate) {
+        this.taskDueDate = taskDueDate;
     }
 
     public void setTaskName(String taskName) {
