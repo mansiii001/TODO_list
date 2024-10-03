@@ -8,6 +8,7 @@ import org.example.application.Task;
 import org.example.application.TaskListOperations;
 
 import java.util.Date;
+import java.util.List;
 
 public class TaskController {
 
@@ -144,6 +145,32 @@ public class TaskController {
         engine.render(routingContext.data(), "components/EditTaskForm", res -> {
             if (res.succeeded()) {
                 System.out.println("success");
+                response.end(res.result());
+            } else {
+                res.cause().printStackTrace();
+            }
+        });
+    }
+
+    public void sortedTasks(RoutingContext routingContext, ThymeleafTemplateEngine engine) {
+        HttpServerResponse response = routingContext.response();
+        HttpServerRequest request = routingContext.request();
+        response.putHeader("content-type", "text/html");
+
+        String currentURL = request.getHeader("HX-Current-Url");
+
+        String templateFileName = "unCompletedTasks::unCompletedTask";
+        List<Task> allTasks = this.taskList.unCheckedTasks();
+
+        if (currentURL.contains("/completed-tasks")) {
+            allTasks = this.taskList.checkedTasks();
+            templateFileName = "completedTasks::completedTask";
+        }
+
+        routingContext.put("tasks", this.taskList.sortByDueDateAsc(allTasks));
+
+        engine.render(routingContext.data(), templateFileName, res -> {
+            if (res.succeeded()) {
                 response.end(res.result());
             } else {
                 res.cause().printStackTrace();

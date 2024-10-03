@@ -42,6 +42,7 @@ public class VerticleController extends AbstractVerticle {
         router.get("/openCreateTaskModal").handler(routingContext -> taskController.openCreateTaskModal(routingContext, engine));
         router.get("/openEditTaskModal").handler(routingContext -> taskController.openEditTaskModal(routingContext, engine));
         router.get("/markCompleted").handler(routingContext -> taskController.markTaskCompleted(routingContext));
+        router.get("/sort-by-due-date").handler(routingContext -> taskController.sortedTasks(routingContext, engine));
 
         HttpServer httpServer = vertx.createHttpServer();
         httpServer.requestHandler(router).listen(8080, "localhost", res->{

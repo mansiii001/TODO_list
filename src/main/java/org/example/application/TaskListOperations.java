@@ -79,4 +79,10 @@ public class TaskListOperations {
         List<Task> allTasks = getAllTasks();
         return allTasks.stream().filter(task -> task.id == taskID).collect(Collectors.toList()).get(0);
     }
+
+    public List<Task> sortByDueDateAsc(List<Task> tasks) {
+        Comparator<Task> comparator = (Task1, Task2) -> Long.valueOf(Task1.taskDueDate.getTime()).compareTo(Task2.taskDueDate.getTime());
+        Collections.sort(tasks, comparator);
+        return tasks;
+    }
 }
