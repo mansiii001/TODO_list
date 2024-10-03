@@ -157,6 +157,7 @@ public class TaskController {
         HttpServerRequest request = routingContext.request();
         response.putHeader("content-type", "text/html");
 
+        String clickCounts = request.getParam("count");
         String currentURL = request.getHeader("HX-Current-Url");
 
         String templateFileName = "unCompletedTasks::unCompletedTask";
@@ -167,7 +168,7 @@ public class TaskController {
             templateFileName = "completedTasks::completedTask";
         }
 
-        routingContext.put("tasks", this.taskList.sortByDueDateAsc(allTasks));
+        routingContext.put("tasks", this.taskList.getSortedTasks(allTasks, Integer.parseInt(clickCounts)));
 
         engine.render(routingContext.data(), templateFileName, res -> {
             if (res.succeeded()) {

@@ -85,4 +85,18 @@ public class TaskListOperations {
         Collections.sort(tasks, comparator);
         return tasks;
     }
+
+    public List<Task> sortByDueDateDesc(List<Task> tasks) {
+        Comparator<Task> comparator = (Task1, Task2) -> Long.valueOf(Task1.taskDueDate.getTime()).compareTo(Task2.taskDueDate.getTime());
+        Collections.sort(tasks, comparator.reversed());
+        return tasks;
+    }
+
+    public List<Task> getSortedTasks(List<Task> allTasks, int sortCounts){
+        if(sortCounts%2==0){
+            return sortByDueDateAsc(allTasks);
+        } else {
+            return sortByDueDateDesc(allTasks);
+        }
+    }
 }
